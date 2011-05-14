@@ -1,3 +1,19 @@
 <h1>
   <%= @user.name %>
 </h1>
+
+<table class="front" summary="For signed-in users">
+    <tr>
+      <td class="main">
+        <h1 class="project">Enter project name</h1>
+        <%= render 'shared/project_form' %>
+      </td>
+    </tr>
+</table>
+
+
+<% unless @user.projects.empty? %>
+     <table class="projects" summary="User projects">
+        <%= render @projects %>
+     </table>        
+<% end %>
