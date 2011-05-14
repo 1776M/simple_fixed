@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
                          :length   => { :maximum => 50 }
    
     validates :email,    :presence => true,
-                         :uniqueness => { :case_sensitive => false }
+                         :uniqueness => { :case_sensitive => false },
                          :format   => { :with => email_regex }
 
     validates :password, :presence     => true,
