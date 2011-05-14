@@ -36,7 +36,7 @@ class UsersController < ApplicationController
       render 'edit'
     end
   end
-
+ 
   def index
     @title = "All users"
     @users = User.all
