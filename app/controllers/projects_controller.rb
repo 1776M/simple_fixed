@@ -1,7 +1,12 @@
 class ProjectsController < ApplicationController
 
-  before_filter :authenticate, :only => [:create, :destroy]
+  before_filter :authenticate, :only => [:create, :destroy, :show]
   before_filter :authorized_user, :only => :destroy
+
+
+  def show
+     @project = current_user.projects.find(params[:id])      
+  end
 
   def create
       @project  = current_user.projects.build(params[:project])
