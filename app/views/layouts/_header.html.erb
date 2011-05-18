@@ -7,7 +7,12 @@
                     <li><%= link_to "Groups", groups_path %></li>  
                     <li><%= link_to "Projects", user_path(current_user) %></li>                
                     <li><%= link_to "Sign out", signout_path %></li> 
-                <% else %> 
+                <% else %>
+
+                    <% if current_user.admin? %>
+                        <li><%= link_to "Groups", group_path(current_user.group) %></li>   
+                    <% end %> 
+ 
                     <li><%= link_to "Projects", user_path(current_user) %></li>                
                     <li><%= link_to "Sign out", signout_path %></li>
                 <% end %>
