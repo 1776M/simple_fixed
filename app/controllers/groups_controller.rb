@@ -2,6 +2,7 @@ class GroupsController < ApplicationController
 
   before_filter :authorized_superadmin, :only => [:index] 
   before_filter :authorized_admin, :only => [:show] 
+  before_filter :authorized_group_member, :only => [:show]
 
   def new
       @group = Group.new
@@ -59,8 +60,13 @@ class GroupsController < ApplicationController
       end
 
       def authorized_admin
-          redirect_to root_path unless current_user_admin(current_user)
+          @group = Group.find(params[:id])
+          redirect_to root_path unless current_user_admin(current_user, @group)
       end
 
+      def authorized_group_member
+          @group = Group.find(params[:id]) 
+          redirect_to root_path unless (@group.id == current_user.group_id  || current_user.name == 'mandeep3')
+      end
   
 end

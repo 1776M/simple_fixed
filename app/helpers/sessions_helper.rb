@@ -43,8 +43,8 @@ module SessionsHelper
     user.name == 'mandeep3'  
   end
 
-  def current_user_admin(user)
-    user.admin == true  ||  user.name == 'mandeep3'
+  def current_user_admin(user, group)
+    (user.admin?  ||  user.name == 'mandeep3')
   end
 
   private
