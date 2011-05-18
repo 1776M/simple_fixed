@@ -1,0 +1,25 @@
+<h1>
+  <%= @group.group_name %>
+  <%= @group.users.count %>
+</h1>
+
+
+
+<table class="front" summary="For signed-in users">
+    <tr>
+      <td class="main">
+        <%= render 'shared/user_form' %>
+      </td>
+    </tr>
+</table>
+
+
+
+<% @users.each do |user| %>
+   <li>
+     <%= link_to user.name, user %>
+     <%if user.admin? %>
+       <%= link_to user.name, user %>
+     <% end%>
+   </li>
+<% end %>

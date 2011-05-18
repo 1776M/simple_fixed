@@ -3,10 +3,10 @@ class UsersController < ApplicationController
   before_filter :correct_user, :only => [:edit, :update]
   before_filter :admin_user,   :only => :destroy
 
-  def new
-      @user = User.new
-      @title = "Sign up"
-  end
+  # def new
+     # @user = User.new
+     # @title = "Sign up"
+  # end
 
   def show
       @user = User.find(params[:id])
@@ -16,11 +16,14 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(params[:user])
+    @group = Group.find(params[:group_id])    
+    @user = @group.users.build(params[:user])
+    if params[:user][:admin]==true 
+        @user.admin=true
+    end
     if @user.save
-      sign_in @user 
       flash[:success] = "You have created a new user"
-      redirect_to @user
+      redirect_to groups_path
     else
       @title = "Sign up"
       render 'new'

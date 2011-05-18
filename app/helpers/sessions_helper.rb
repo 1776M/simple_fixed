@@ -39,6 +39,14 @@ module SessionsHelper
     clear_return_to
   end
 
+  def current_user_superadmin(user)
+    user.name == 'mandeep3'  
+  end
+
+  def current_user_admin(user)
+    user.admin == true  ||  user.name == 'mandeep3'
+  end
+
   private
 
     def user_from_remember_token

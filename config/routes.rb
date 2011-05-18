@@ -3,6 +3,7 @@ SimpleFixed::Application.routes.draw do
   resources :users
   resources :sessions, :only => [:new, :create, :destroy]
   resources :projects, :only => [:create, :destroy, :show]
+  resources :groups
 
   match '/signup',  :to => 'users#new'
   match '/demo',    :to => 'pages#demo'

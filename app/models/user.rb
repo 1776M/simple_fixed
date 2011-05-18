@@ -1,9 +1,10 @@
 class User < ActiveRecord::Base
     
     attr_accessor :password
-    attr_accessible :name, :email, :password, :password_confirmation
+    attr_accessible :admin, :name, :email, :password, :password_confirmation
 
     has_many :projects, :dependent => :destroy
+    belongs_to :group
 
     email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
@@ -35,6 +36,7 @@ class User < ActiveRecord::Base
    (user && user.salt == cookie_salt) ? user : nil
    end
 
+   default_scope :order => 'users.created_at ASC'
 
    private
 

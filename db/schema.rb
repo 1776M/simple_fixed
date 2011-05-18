@@ -10,7 +10,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110514222042) do
+ActiveRecord::Schema.define(:version => 20110515104410) do
+
+  create_table "groups", :force => true do |t|
+    t.string   "group_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "projects", :force => true do |t|
     t.string   "project_name"
@@ -29,9 +35,11 @@ ActiveRecord::Schema.define(:version => 20110514222042) do
     t.string   "encrypted_password"
     t.string   "salt"
     t.boolean  "admin",              :default => false
+    t.integer  "group_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["group_id"], :name => "index_users_on_group_id"
   add_index "users", ["name"], :name => "index_users_on_name", :unique => true
 
 end
