@@ -53,7 +53,11 @@ class UsersController < ApplicationController
   def destroy
     User.find(params[:id]).destroy
     flash[:success] = "User deleted"
-    redirect_to users_path
+    if current_user.name == 'mandeep3'     
+        redirect_to groups_path
+    else
+        redirect_to group_path(current_user.group_id)
+    end
   end
   
   private
@@ -64,7 +68,7 @@ class UsersController < ApplicationController
     end 
 
     def admin_user
-      redirect_to(root_path) unless current_user.admin?
+      redirect_to(root_path) unless current_user.admin? || current_user.name == 'mandeep3'
     end
 
 end

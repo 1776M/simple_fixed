@@ -21,5 +21,9 @@
      <%if user.admin? %>
        <%= link_to user.name, user %>
      <% end%>
+            <%= link_to "delete", user,   :method => :delete,
+                                          :confirm => "You sure?",
+                                          :title => user.name %>
    </li>
 <% end %>
+
