@@ -1,5 +1,8 @@
 class BorrowingsController < ApplicationController
 
+    before_filter :authorized_admin, :only => [:show] 
+    before_filter :authorized_group_member, :only => [:show]
+
   def show
       @borrowing = Borrowing.find(params[:id])
   end

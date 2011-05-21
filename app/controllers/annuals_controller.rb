@@ -1,5 +1,8 @@
 class AnnualsController < ApplicationController
 
+  before_filter :authorized_admin, :only => [:show] 
+  before_filter :authorized_group_member, :only => [:show]
+
   def show
       @annual = Annual.find(params[:id])
   end

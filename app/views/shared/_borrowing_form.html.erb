@@ -1,21 +1,27 @@
 <%= form_for @borrowing do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
   <div class="field">
+    <%= f.label :size %><br />
     <%= f.text_field :size %>
   </div>
   <div class="field">
+    <%= f.label :coupon %><br />
     <%= f.text_field :coupon %>
   </div>
   <div class="field">
+    <%= f.label :issue_year %><br />
     <%= f.text_field :issue_year %>
   </div>
   <div class="field">
+    <%= f.label :maturity_year %><br />
     <%= f.text_field :maturity_year %>
   </div>
   <div class="field">
+    <%= f.label :currency %><br />
     <%= f.text_field :currency %>
   </div>
   <div class="field">
+    <%= f.label :fixed_float %><br />
     <%= f.text_field :fixed_float %>
   </div>
   <%= hidden_field_tag :basecase_id, @basecase.id %>
