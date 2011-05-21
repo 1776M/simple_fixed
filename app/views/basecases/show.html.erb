@@ -1,3 +1,43 @@
 <h1>
   <%= @basecase.name %>
 </h1>
+
+
+<table class="front" summary="For signed-in users">
+      <tr>
+        <td class="main">
+          <%= render 'shared/annual_form' %>
+        </td>
+      </tr>
+  </table>
+
+<% @annuals.each do |annual| %>
+   <li>
+     <%= link_to annual.year_one, annual %>
+     <%if current_user.admin? %>
+
+            <%= link_to "delete", annual,   :method => :delete,
+                                            :confirm => "You sure?" %>
+    <% end%>
+   </li>
+<% end %>
+
+
+<table class="front" summary="For signed-in users">
+      <tr>
+        <td class="main">
+          <%= render 'shared/borrowing_form' %>
+        </td>
+      </tr>
+  </table>
+
+<% @borrowings.each do |borrowing| %>
+   <li>
+     <%= link_to borrowing.size, borrowing %>
+     <%if current_user.admin? %>
+
+            <%= link_to "delete", borrowing,   :method => :delete,
+                                               :confirm => "You sure?" %>
+    <% end%>
+   </li>
+<% end %>

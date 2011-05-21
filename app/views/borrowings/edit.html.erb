@@ -1,0 +1,25 @@
+<%= form_for @borrowing do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  <div class="field">
+    <%= f.text_field :size %>
+  </div>
+  <div class="field">
+    <%= f.text_field :coupon %>
+  </div>
+  <div class="field">
+    <%= f.text_field :issue_year %>
+  </div>
+  <div class="field">
+    <%= f.text_field :maturity_year %>
+  </div>
+  <div class="field">
+    <%= f.text_field :currency %>
+  </div>
+  <div class="field">
+    <%= f.text_field :fixed_float %>
+  </div>
+  <%= hidden_field_tag :basecase_id, @basecase.id %>
+  <div class="actions">
+    <%= f.submit "Submit" %>
+  </div>
+<% end %>

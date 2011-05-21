@@ -4,6 +4,8 @@ class Project < ActiveRecord::Base
 
     belongs_to :user
 
+    has_one :group, :through => :user
+
     validates :project_name, :presence => true
     validates :user_id,      :presence => true
 

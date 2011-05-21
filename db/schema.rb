@@ -10,7 +10,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110521092344) do
+ActiveRecord::Schema.define(:version => 20110521142151) do
+
+  create_table "annuals", :force => true do |t|
+    t.float    "year_one"
+    t.float    "year_two"
+    t.float    "year_three"
+    t.float    "year_four"
+    t.float    "year_five"
+    t.float    "year_six"
+    t.float    "year_seven"
+    t.float    "year_eight"
+    t.float    "year_nine"
+    t.float    "year_ten"
+    t.integer  "basecase_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "annuals", ["basecase_id"], :name => "index_annuals_on_basecase_id"
 
   create_table "basecases", :force => true do |t|
     t.integer  "group_id"
@@ -20,6 +38,20 @@ ActiveRecord::Schema.define(:version => 20110521092344) do
   end
 
   add_index "basecases", ["group_id"], :name => "index_coredata_on_group_id"
+
+  create_table "borrowings", :force => true do |t|
+    t.float    "size"
+    t.float    "coupon"
+    t.integer  "issue_year"
+    t.integer  "maturity_year"
+    t.string   "fixed_float"
+    t.string   "currency"
+    t.integer  "basecase_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "borrowings", ["basecase_id"], :name => "index_borrowings_on_basecase_id"
 
   create_table "groups", :force => true do |t|
     t.string   "group_name"

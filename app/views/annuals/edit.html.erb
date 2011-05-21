@@ -1,0 +1,37 @@
+<%= form_for @annual do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  <div class="field">
+    <%= f.text_field :year_one %>
+  </div>
+  <div class="field">
+    <%= f.text_field :year_two %>
+  </div>
+  <div class="field">
+    <%= f.text_field :year_three %>
+  </div>
+  <div class="field">
+    <%= f.text_field :year_four %>
+  </div>
+  <div class="field">
+    <%= f.text_field :year_five %>
+  </div>
+  <div class="field">
+    <%= f.text_field :year_six %>
+  </div>
+  <div class="field">
+    <%= f.text_field :year_seven %>
+  </div>
+  <div class="field">
+    <%= f.text_field :year_eight %>
+  </div>
+  <div class="field">
+    <%= f.text_field :year_nine %>
+  </div>
+  <div class="field">
+    <%= f.text_field :year_ten %>
+  </div>
+  <%= hidden_field_tag :basecase_id, @basecase.id %>
+  <div class="actions">
+    <%= f.submit "Submit" %>
+  </div>
+<% end %>

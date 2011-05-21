@@ -5,7 +5,8 @@ SimpleFixed::Application.routes.draw do
   resources :projects, :only => [:create, :destroy, :show]
   resources :groups
   resources :basecases, :only => [:create, :destroy, :show]
-  
+  resources :annuals
+  resources :borrowings
 
   match '/signup',  :to => 'users#new'
   match '/demo',    :to => 'pages#demo'
