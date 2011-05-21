@@ -10,7 +10,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110515104410) do
+ActiveRecord::Schema.define(:version => 20110521092344) do
+
+  create_table "basecases", :force => true do |t|
+    t.integer  "group_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name",       :default => "Core data"
+  end
+
+  add_index "basecases", ["group_id"], :name => "index_coredata_on_group_id"
 
   create_table "groups", :force => true do |t|
     t.string   "group_name"

@@ -12,14 +12,16 @@ class GroupsController < ApplicationController
   def show
       @group = Group.find(params[:id])
       @users = @group.users
+      @basecases = @group.basecases
       @title = @group.group_name
       @user = User.new if signed_in?
+      @basecase = Basecase.new if signed_in? 
   end
 
   def create
     @group = Group.new(params[:group])
     if @group.save 
-      flash[:success] = "You have created a new user"
+      flash[:success] = "You have created a new group"
       redirect_to @group
     else
       @title = "New group"
