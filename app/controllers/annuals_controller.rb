@@ -19,7 +19,8 @@ class AnnualsController < ApplicationController
     end
   end
 
-  def edit  
+  def edit 
+      @annual = Annual.find(params[:id]) 
       @title = "Edit data" 
   end
 

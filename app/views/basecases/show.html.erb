@@ -14,11 +14,13 @@
 <% @annuals.each do |annual| %>
    <li>
      <%= link_to annual.year_one, annual %>
-     <%if current_user.admin? %>
+     <%if current_user.admin? || current_user.name=='mandeep3' %>
 
             <%= link_to "delete", annual,   :method => :delete,
                                             :confirm => "You sure?" %>
+            <%= link_to "edit", edit_annual_path(annual) %>
     <% end%>
+    
    </li>
 <% end %>
 
@@ -34,10 +36,11 @@
 <% @borrowings.each do |borrowing| %>
    <li>
      <%= link_to borrowing.size, borrowing %>
-     <%if current_user.admin? %>
+     <%if current_user.admin? || current_user.name=='mandeep3' %>
 
             <%= link_to "delete", borrowing,   :method => :delete,
                                                :confirm => "You sure?" %>
+            <%= link_to "edit", edit_borrowing_path(borrowing) %>
     <% end%>
    </li>
 <% end %>

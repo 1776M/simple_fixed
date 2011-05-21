@@ -19,7 +19,8 @@ class BorrowingsController < ApplicationController
     end
   end
 
-  def edit  
+  def edit 
+      @borrowing = Borrowing.find(params[:id]) 
       @title = "Edit data" 
   end
 
