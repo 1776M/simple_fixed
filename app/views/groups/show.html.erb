@@ -26,23 +26,29 @@
    </li>
 <% end %>
 
-<% if current_user.name == 'mandeep3' %>
-  <table class="front" summary="For signed-in users">
-      <tr>
-        <td class="main">
-          <%= render 'shared/basecase_form' %>
-        </td>
-      </tr>
-  </table>
+<% if @group.basecases.count < 1 %>
+  <% if current_user.name == 'mandeep3' %>
+    <table class="front" summary="For signed-in users">
+        <tr>
+          <td class="main">
+            <%= render 'shared/basecase_form' %>
+          </td>
+        </tr>
+    </table>
+  <% end %>
 <% end %>
 
-<% @basecases.each do |basecase| %>
-   <li>
-     <%= link_to basecase.name, basecase %>
-     <%if current_user.name == 'mandeep3' %>
+<h1>
+   Basecase data
+</h1>  
 
-            <%= link_to "delete", basecase,   :method => :delete,
-                                              :confirm => "You sure?" %>
-    <% end%>
-   </li>
-<% end %>
+  <% @basecases.each do |basecase| %>
+     <li>
+       <%= link_to basecase.name, basecase %>
+       <%if current_user.name == 'mandeep3' %>
+
+              <%= link_to "delete", basecase,   :method => :delete,
+                                                :confirm => "You sure?" %>
+      <% end%>
+     </li>
+  <% end %>
