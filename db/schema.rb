@@ -10,7 +10,39 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110521142151) do
+ActiveRecord::Schema.define(:version => 20110522092855) do
+
+  create_table "actannuals", :force => true do |t|
+    t.float    "year_one"
+    t.float    "year_two"
+    t.float    "year_three"
+    t.float    "year_four"
+    t.float    "year_five"
+    t.float    "year_six"
+    t.float    "year_seven"
+    t.float    "year_eight"
+    t.float    "year_nine"
+    t.float    "year_ten"
+    t.integer  "scenario_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "actannuals", ["scenario_id"], :name => "index_actannuals_on_scenario_id"
+
+  create_table "actborrowings", :force => true do |t|
+    t.float    "size"
+    t.float    "coupon"
+    t.integer  "issue_year"
+    t.integer  "maturity_year"
+    t.string   "fixed_float"
+    t.string   "currency"
+    t.integer  "scenario_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "actborrowings", ["scenario_id"], :name => "index_actborrowings_on_scenario_id"
 
   create_table "annuals", :force => true do |t|
     t.float    "year_one"
@@ -67,6 +99,15 @@ ActiveRecord::Schema.define(:version => 20110521142151) do
   end
 
   add_index "projects", ["user_id"], :name => "index_projects_on_user_id"
+
+  create_table "scenarios", :force => true do |t|
+    t.string   "name"
+    t.integer  "project_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "scenarios", ["project_id"], :name => "index_scenarios_on_project_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"

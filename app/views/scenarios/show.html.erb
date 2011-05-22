@@ -1,0 +1,50 @@
+<h1>
+  <%= @scenario.name %>
+</h1>
+
+
+<% if @scenario.actannuals.count < 1 %>
+<table class="front" summary="For signed-in users">
+      <tr>
+        <td class="main">
+          <%= render 'shared/actannual_form' %>
+        </td>
+      </tr>
+</table>
+<% end %>
+
+
+<% @actannuals.each do |actannual| %>
+   <li>
+     <%= link_to actannual.year_one, actannual %>
+     <%if current_user.admin? || current_user.name=='mandeep3' %>
+
+            <%= link_to "delete", actannual,   :method => :delete,
+                                               :confirm => "You sure?" %>
+            <%= link_to "edit", edit_actannual_path(actannual) %>
+    <% end%>
+    
+   </li>
+<% end %>
+
+
+<table class="front" summary="For signed-in users">
+      <tr>
+        <td class="main">
+          <%= render 'shared/actborrowing_form' %>
+        </td>
+      </tr>
+  </table>
+
+<% @actborrowings.each do |actborrowing| %>
+   <li>
+     <%= link_to actborrowing.size, actborrowing %>
+     <%if current_user.admin? || current_user.name=='mandeep3' %>
+
+            <%= link_to "delete", actborrowing,   :method => :delete,
+                                                  :confirm => "You sure?" %>
+            <%= link_to "edit", edit_actborrowing_path(actborrowing) %>
+    <% end%>
+   </li>
+<% end %>
+

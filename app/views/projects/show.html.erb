@@ -1,3 +1,25 @@
 <h1>
   <%= @project.project_name %>
 </h1>
+
+<h1>
+  Add a scenario
+</h1>
+
+  <table class="front" summary="For signed-in users">
+      <tr>
+        <td class="main">
+          <%= render 'shared/scenario_form' %>
+        </td>
+      </tr>
+  </table>
+
+
+<% @scenarios.each do |scenario| %>
+   <li>
+     <%= link_to scenario.name, scenario %>
+
+            <%= link_to "delete", scenario,   :method => :delete,
+                                              :confirm => "You sure?" %>
+   </li>
+<% end %>

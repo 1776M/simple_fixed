@@ -5,6 +5,9 @@ class Project < ActiveRecord::Base
     belongs_to :user
 
     has_one :group, :through => :user
+    has_many :basescases, :through => :group
+    has_many :scenarios, :dependent => :destroy
+
 
     validates :project_name, :presence => true
     validates :user_id,      :presence => true

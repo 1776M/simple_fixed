@@ -8,7 +8,6 @@ class CreateBorrowings < ActiveRecord::Migration
       t.string :fixed_float      
       t.string :currency  
       t.integer :basecase_id
-
       t.timestamps
     end
      add_index :borrowings, :basecase_id

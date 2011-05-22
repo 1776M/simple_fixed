@@ -5,7 +5,10 @@ class ProjectsController < ApplicationController
 
 
   def show
-     @project = current_user.projects.find(params[:id])      
+     @project = current_user.projects.find(params[:id])
+     @scenarios = @project.scenarios
+     @title = @project.project_name
+     @scenario = Scenario.new if signed_in?    
   end
 
   def create
