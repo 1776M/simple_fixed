@@ -28,7 +28,7 @@ class ActannualsController < ApplicationController
     @actannual = Actannual.find(params[:id])
     if @actannual.update_attributes(params[:actannual])
       flash[:success] = "Data updated"
-      redirect_to @actannual
+      redirect_to scenario_path(@actannual.scenario_id)
     else
       @title = "Edit data"
       render 'edit'

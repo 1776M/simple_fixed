@@ -28,7 +28,7 @@ class ActborrowingsController < ApplicationController
     @actborrowing = Actborrowing.find(params[:id])
     if @actborrowing.update_attributes(params[:actborrowing])
       flash[:success] = "Data updated"
-      redirect_to @actborrowing
+      redirect_to scenario_path(@actborrowing.scenario_id)
     else
       @title = "Edit data"
       render 'edit'
