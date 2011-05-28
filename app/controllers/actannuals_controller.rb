@@ -12,7 +12,7 @@ class ActannualsController < ApplicationController
     @actannual = @scenario.actannuals.build(params[:actannual])
     if @actannual.save
       flash[:success] = "You have created new data"
-      redirect_to scenario_path(@actannual.scenario_id)
+      redirect_to project_path(@actannual.scenario.project.id)
     else
       @title = "Sign up"
       render 'new'

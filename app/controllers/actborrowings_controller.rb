@@ -12,7 +12,7 @@ class ActborrowingsController < ApplicationController
     @actborrowing = @scenario.actborrowings.build(params[:actborrowing])
     if @actborrowing.save
       flash[:success] = "You have created new data"
-      redirect_to scenario_path(@actborrowing.scenario_id)
+      redirect_to project_path(@actborrowing.scenario.project.id)
     else
       @title = "Sign up"
       render 'new'
