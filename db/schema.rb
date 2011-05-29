@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110522092855) do
+ActiveRecord::Schema.define(:version => 20110528113752) do
 
   create_table "actannuals", :force => true do |t|
     t.float    "year_one"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20110522092855) do
     t.integer  "scenario_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "top_borrowing"
   end
 
   add_index "actborrowings", ["scenario_id"], :name => "index_actborrowings_on_scenario_id"

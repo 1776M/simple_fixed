@@ -1,6 +1,6 @@
 class Actborrowing < ActiveRecord::Base
 
-    attr_accessible :size, :coupon, :issue_year, :maturity_year, :currency, :fixed_float 
+    attr_accessible :size, :coupon, :issue_year, :maturity_year, :currency, :fixed_float, :top_borrowing 
 
     belongs_to :scenario
 
