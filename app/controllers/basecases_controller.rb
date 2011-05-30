@@ -15,7 +15,8 @@ class BasecasesController < ApplicationController
      @fixed_percent = @basecase.fixed_percent(params[:id])
      @currency_percent = @basecase.total_debt(params[:id]).group_by{|c| c.currency }
      @float_percent = @basecase.total_debt(params[:id]).group_by{|c| c.fixed_float }
-     @maturity_percent = @basecase.total_debt(params[:id]).group_by{|c| c.maturity_year - c.issue_year }       
+     @maturity_percent = @basecase.total_debt(params[:id]).group_by{|c| c.maturity_year - c.issue_year }
+     @reset_percent = @basecase.total_debt(params[:id]).group_by{|c| c.maturity_year - Time.now.year }       
   end
 
   def create

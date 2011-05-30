@@ -54,7 +54,7 @@
           <% fixed = fixed_percent.size + fixed  %>  
      <% end %>
      <% if total > 0 %>
-          <%= (fixed/total)*100 %><br /><br />
+          <%= ((fixed/total)*100).round(2) %><br /><br />
      <% else %>
           <%= 0 %><br /><br />
      <% end %>
@@ -80,7 +80,7 @@
              <% total_currency = debt.size + total_currency  %>  
          <% end %>   
      <% if total > 0 %>
-          <%= (total_currency/total)*100 %><br /><br />
+          <%= ((total_currency/total)*100).round(2) %><br /><br />
      <% else %>
           <%= 0 %><br /><br />
      <% end %>
@@ -110,7 +110,7 @@
             <% total_float = debt.size + total_float  %>
          <% end %>  
      <% if total > 0 %>
-          <%= (total_float/total)*100 %><br /><br />
+          <%= ((total_float/total)*100).round(2) %><br /><br />
      <% else %>
           <%= 0 %><br /><br />
      <% end %>
@@ -138,7 +138,7 @@
           <% total_term = debt.size + total_term  %>  
        <% end %>      
      <% if total > 0 %>
-          <%= (total_term/total)*100 %><br /><br />
+          <%= ((total_term/total)*100).round(2) %><br /><br />
      <% else %>
           <%= 0 %><br /><br />
      <% end %>
@@ -147,5 +147,45 @@
 
 
 
+<h1>Reset mix of debt</h1>
+<% @scenarios.each do |scenario| %>
+<% @total_debt = scenario.total_debt(scenario.id) %>
+<% @reset_percent = @scenario.total_debt(scenario.id).group_by{|c| c.maturity_year - Time.now.year }  %>
+     <b><%=scenario.name %></b><br />
+
+     <% total = 0 %>
+     <% @total_debt.each do |total_debt| %> 
+          <% total = total_debt.size + total  %>  
+     <% end %>
+     
+
+     <% @reset_percent.each do |term, debt| %>
+     <% total_reset = 0 %>
+     <h3><%= term %> years </h3>
+       <% debt.each do |debt| %>  
+          <% total_reset = debt.size + total_reset  %>  
+       <% end %>      
+     <% if total > 0 %>
+          <%= ((total_reset/total)*100).round(2) %><br /><br />
+     <% else %>
+          <%= 0 %><br /><br />
+     <% end %>
+     <% end %>      
+<% end %>
 
 
+
+<h1>Macaulay duration</h1>
+<% @scenarios.each do |scenario| %>
+<% @total_debt = scenario.total_debt(scenario.id) %>
+
+     <b><%=scenario.name %></b><br />
+
+     <% total = 0 %>
+     <% @total_debt.each do |total_debt| %> 
+          <% total = total_debt.size + total  %>  
+     <% end %>
+
+     <%= (scenario.macaulay_duration(scenario.id)/total).round(2) %><br />
+
+<% end %>

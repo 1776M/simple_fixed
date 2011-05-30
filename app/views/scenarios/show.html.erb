@@ -114,7 +114,7 @@
      <% fixed = fixed_percent.size + fixed  %>  
 <% end %>
 <% if total > 0 %>
-  <%= (fixed/total)*100 %>
+  <%= ((fixed/total)*100).round(2) %>
 <% else %>
   <%= 0 %>
 <% end %>
@@ -127,7 +127,7 @@
     <% total_currency = total_currency + debt.size %>  
   <% end %>
 <% if total > 0 %>  
-    <%= total_currency/total * 100 %>
+    <%= (total_currency/total * 100).round(2) %>
 <% else %>
   <%= 0 %>
 <% end %>
@@ -143,7 +143,7 @@
     <% total_float = total_float + debt.size %>  
   <% end %>
 <% if total > 0 %>  
-  <%= total_float/total * 100 %>
+  <%= (total_float/total * 100).round(2) %>
 <% else %>
   <%= 0 %>
 <% end %>
@@ -157,9 +157,29 @@
     <% total_term = total_term + debt.size %>  
   <% end %>
 <% if total > 0 %>   
-    <%= total_term/total * 100 %>
+    <%= (total_term/total * 100).round(2) %>
 <% else %>
   <%= 0 %>
 <% end %>
 <% end %>
+
+<h1>Reset risk</h1>
+<% @reset_percent.each do |reset, debt| %>  
+<% total_reset = 0 %>
+<h2><%= reset %> years </h2>  
+  <% debt.each do |debt| %>
+    <% total_reset = total_reset + debt.size %>  
+  <% end %>
+<% if total > 0 %>   
+    <%= (total_reset/total * 100).round(2) %>
+<% else %>
+  <%= 0 %>
+<% end %>
+<% end %>
+
+
+<h1>Macaulay duration</h1>
+<%= (@scenario.macaulay_duration(@scenario.id)/total).round(2) %>
+
+
 
