@@ -1,4 +1,7 @@
 <h1><%= @title %></h1>
 
-<%= link_to "Sign up now!", signup_path, :class => "signup_button round" %>
-
+<% if signed_in? %>
+  Welcome
+<% else %>
+ <%= link_to "Sign up now!", signup_path, :class => "signup_button round" %>
+<% end %>
