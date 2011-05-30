@@ -23,3 +23,129 @@
                                               :confirm => "You sure?" %>
    </li>
 <% end %>
+
+
+<h1>Total debt</h1>
+<% @scenarios.each do |scenario| %>
+<% @total_debt = scenario.total_debt(scenario.id) %>
+     <b><%=scenario.name %></b><br />
+     
+     <% total = 0 %>
+     <% @total_debt.each do |total_debt| %> 
+          <% total = total_debt.size + total  %>  
+     <% end %>
+     <%= total %><br /><br />
+      
+<% end %>
+
+<h1>Fixed percent of debt</h1>
+<% @scenarios.each do |scenario| %>
+<% @total_debt = scenario.total_debt(scenario.id) %>
+<% @fixed_percent = scenario.fixed_percent(scenario.id) %>
+     <b><%=scenario.name %></b><br />
+
+     <% total = 0 %>
+     <% @total_debt.each do |total_debt| %> 
+          <% total = total_debt.size + total  %>  
+     <% end %>
+     
+     <% fixed = 0 %>
+     <% @fixed_percent.each do |fixed_percent| %>
+          <% fixed = fixed_percent.size + fixed  %>  
+     <% end %>
+     <% if total > 0 %>
+          <%= (fixed/total)*100 %><br /><br />
+     <% else %>
+          <%= 0 %><br /><br />
+     <% end %>
+      
+<% end %>
+
+
+<h1>Currency mix of debt</h1>
+<% @scenarios.each do |scenario| %>
+<% @total_debt = scenario.total_debt(scenario.id) %>
+<% @currency_percent = @scenario.total_debt(scenario.id).group_by{|c| c.currency } %>
+     <b><%=scenario.name %></b><br />
+
+     <% total = 0 %>
+     <% @total_debt.each do |total_debt| %> 
+          <% total = total_debt.size + total  %>  
+     <% end %>
+     
+     <% @currency_percent.each do |currency, debt|  %>
+     <% total_currency = 0 %>
+     <h3><%= currency %></h3>  
+         <% debt.each do |debt| %>
+             <% total_currency = debt.size + total_currency  %>  
+         <% end %>   
+     <% if total > 0 %>
+          <%= (total_currency/total)*100 %><br /><br />
+     <% else %>
+          <%= 0 %><br /><br />
+     <% end %>
+     <% end %>      
+<% end %>
+
+
+
+
+
+<h1>Floating percent of debt</h1>
+<% @scenarios.each do |scenario| %>
+<% @total_debt = scenario.total_debt(scenario.id) %>
+<% @float_percent = @scenario.total_debt(scenario.id).group_by{|c| c.fixed_float } %>
+     <b><%=scenario.name %></b><br />
+
+     <% total = 0 %>
+     <% @total_debt.each do |total_debt| %> 
+          <% total = total_debt.size + total  %>  
+     <% end %>
+     
+
+     <% @float_percent.each do |fixed_float, debt| %>
+          <% total_float = 0 %>
+          <h3><%= fixed_float %></h3>
+         <% debt.each do |debt| %>  
+            <% total_float = debt.size + total_float  %>
+         <% end %>  
+     <% if total > 0 %>
+          <%= (total_float/total)*100 %><br /><br />
+     <% else %>
+          <%= 0 %><br /><br />
+     <% end %>
+     <% end %>      
+<% end %>
+
+
+
+<h1>Term mix of debt</h1>
+<% @scenarios.each do |scenario| %>
+<% @total_debt = scenario.total_debt(scenario.id) %>
+<% @maturity_percent = @scenario.total_debt(scenario.id).group_by{|c| c.maturity_year - c.issue_year } %>
+     <b><%=scenario.name %></b><br />
+
+     <% total = 0 %>
+     <% @total_debt.each do |total_debt| %> 
+          <% total = total_debt.size + total  %>  
+     <% end %>
+     
+
+     <% @maturity_percent.each do |term, debt| %>
+     <% total_term = 0 %>
+     <h3><%= term %> years </h3>
+       <% debt.each do |debt| %>  
+          <% total_term = debt.size + total_term  %>  
+       <% end %>      
+     <% if total > 0 %>
+          <%= (total_term/total)*100 %><br /><br />
+     <% else %>
+          <%= 0 %><br /><br />
+     <% end %>
+     <% end %>      
+<% end %>
+
+
+
+
+

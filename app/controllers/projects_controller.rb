@@ -8,7 +8,7 @@ class ProjectsController < ApplicationController
      @project = current_user.projects.find(params[:id])
      @scenarios = @project.scenarios
      @title = @project.project_name
-     @scenario = Scenario.new if signed_in?    
+     @scenario = Scenario.new if signed_in?          
   end
 
   def create

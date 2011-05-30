@@ -10,7 +10,12 @@ class BasecasesController < ApplicationController
      @annuals = @basecase.annuals
      @annual = Annual.new if signed_in?   
      @borrowings = @basecase.borrowings
-     @borrowing = Borrowing.new if signed_in?      
+     @borrowing = Borrowing.new if signed_in?
+     @total_debt = @basecase.total_debt(params[:id])
+     @fixed_percent = @basecase.fixed_percent(params[:id])
+     @currency_percent = @basecase.total_debt(params[:id]).group_by{|c| c.currency }
+     @float_percent = @basecase.total_debt(params[:id]).group_by{|c| c.fixed_float }
+     @maturity_percent = @basecase.total_debt(params[:id]).group_by{|c| c.maturity_year - c.issue_year }       
   end
 
   def create

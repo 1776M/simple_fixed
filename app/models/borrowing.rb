@@ -12,4 +12,5 @@ class Borrowing < ActiveRecord::Base
     validates :fixed_float,    :presence => true
     validates :basecase_id,    :presence => true
 
+
 end

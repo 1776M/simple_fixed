@@ -14,7 +14,13 @@ class ScenariosController < ApplicationController
      @group = @scenario.project.user.group
      @basecase = Basecase.find(:last, :conditions => [" group_id = ?", @group.id])
      @annual =  Annual.find(:last, :conditions => [" basecase_id = ?", @basecase.id])
-     @borrowings =  Borrowing.find(:all, :conditions => [" basecase_id = ?", @basecase.id])      
+     @borrowings =  Borrowing.find(:all, :conditions => [" basecase_id = ?", @basecase.id])
+     @total_debt = @scenario.total_debt(params[:id])
+     @fixed_percent = @scenario.fixed_percent(params[:id])
+     @currency_percent = @scenario.total_debt(params[:id]).group_by{|c| c.currency }
+     @float_percent = @scenario.total_debt(params[:id]).group_by{|c| c.fixed_float }
+     @maturity_percent = @scenario.total_debt(params[:id]).group_by{|c| c.maturity_year - c.issue_year } 
+      
   end
 
   def create
@@ -34,7 +40,7 @@ class ScenariosController < ApplicationController
     if current_user.name == 'mandeep3'     
         redirect_to groups_path
     else
-        redirect_to group_path(current_user.project_id)
+        redirect_to group_path(current_user.group_id)
     end
 
   end

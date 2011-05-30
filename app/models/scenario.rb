@@ -12,4 +12,14 @@ class Scenario < ActiveRecord::Base
     validates :project_id, :presence => true
 
 
+    def total_debt(id) 
+        total = Actborrowing.find_by_sql(["Select * from Actborrowings where scenario_id=?",id])
+    end
+
+    
+    def fixed_percent(id) 
+        fixed = Actborrowing.find_by_sql(["Select * from Actborrowings where scenario_id=? and fixed_float=?",id,"fixed"])
+    end
+
+
 end

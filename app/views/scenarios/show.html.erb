@@ -103,5 +103,63 @@
 
 
 
+<% total = 0 %>
+<% @total_debt.each do |total_debt| %>
+     <% total = total_debt.size + total  %>  
+<% end %>
+<%= total %>
 
+<% fixed = 0 %>
+<% @fixed_percent.each do |fixed_percent| %>
+     <% fixed = fixed_percent.size + fixed  %>  
+<% end %>
+<% if total > 0 %>
+  <%= (fixed/total)*100 %>
+<% else %>
+  <%= 0 %>
+<% end %>
+
+
+<% @currency_percent.each do |currency, debt| %>  
+<% total_currency = 0 %>
+<h2><%= currency %></h2>  
+  <% debt.each do |debt| %>
+    <% total_currency = total_currency + debt.size %>  
+  <% end %>
+<% if total > 0 %>  
+    <%= total_currency/total * 100 %>
+<% else %>
+  <%= 0 %>
+<% end %>
+<% end %> 
+
+
+
+
+<% @float_percent.each do |fixed_float, debt| %>  
+<% total_float = 0 %>
+<h2><%= fixed_float %></h2>  
+  <% debt.each do |debt| %>
+    <% total_float = total_float + debt.size %>  
+  <% end %>
+<% if total > 0 %>  
+  <%= total_float/total * 100 %>
+<% else %>
+  <%= 0 %>
+<% end %>
+<% end %> 
+
+
+<% @maturity_percent.each do |term, debt| %>  
+<% total_term = 0 %>
+<h2><%= term %> years </h2>  
+  <% debt.each do |debt| %>
+    <% total_term = total_term + debt.size %>  
+  <% end %>
+<% if total > 0 %>   
+    <%= total_term/total * 100 %>
+<% else %>
+  <%= 0 %>
+<% end %>
+<% end %>
 
