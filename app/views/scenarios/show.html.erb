@@ -163,7 +163,7 @@
 <% end %>
 <% end %>
 
-<h1>Reset risk</h1>
+
 <% @reset_percent.each do |reset, debt| %>  
 <% total_reset = 0 %>
 <h2><%= reset %> years </h2>  
@@ -171,6 +171,7 @@
     <% total_reset = total_reset + debt.size %>  
   <% end %>
 <% if total > 0 %>   
+    <h1>Reset risk</h1>
     <%= (total_reset/total * 100).round(2) %>
 <% else %>
   <%= 0 %>
@@ -178,8 +179,13 @@
 <% end %>
 
 
-<h1>Macaulay duration</h1>
-<%= (@scenario.macaulay_duration(@scenario.id)/total).round(2) %>
+
+<% if total > 0 %> 
+ <h1>Macaulay duration</h1>
+ <%= (@scenario.macaulay_duration(@scenario.id)/total).round(2) %>
+<% else %>
+   <%= 0 %><br />
+<% end %>  
 
 
 

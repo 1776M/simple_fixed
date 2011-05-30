@@ -175,7 +175,7 @@
 
 
 
-<h1>Macaulay duration</h1>
+
 <% @scenarios.each do |scenario| %>
 <% @total_debt = scenario.total_debt(scenario.id) %>
 
@@ -185,7 +185,10 @@
      <% @total_debt.each do |total_debt| %> 
           <% total = total_debt.size + total  %>  
      <% end %>
-
-     <%= (scenario.macaulay_duration(scenario.id)/total).round(2) %><br />
-
+     <% if total > 0 %>
+         <h1>Macaulay duration</h1> 
+         <%= (scenario.macaulay_duration(scenario.id)/total).round(2) %><br />
+     <% else %>
+         <%= 0 %><br />
+     <% end %>  
 <% end %>
