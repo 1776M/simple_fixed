@@ -1,0 +1,16 @@
+<h1>Edit fx rate</h1>
+
+<%= form_for(@fxrate) do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  <div class="field">
+    <%= f.label :currency_pair %><br />
+    <%= f.text_field :currency_pair %>
+  </div>
+  <div class="field">
+    <%= f.label :fx_rate %><br />
+    <%= f.text_field :fx_rate %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Create fx rate" %>
+  </div>
+<% end %>

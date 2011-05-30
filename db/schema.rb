@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110528113752) do
+ActiveRecord::Schema.define(:version => 20110530174802) do
 
   create_table "actannuals", :force => true do |t|
     t.float    "year_one"
@@ -86,6 +86,13 @@ ActiveRecord::Schema.define(:version => 20110528113752) do
 
   add_index "borrowings", ["basecase_id"], :name => "index_borrowings_on_basecase_id"
 
+  create_table "fxrates", :force => true do |t|
+    t.string   "currency_pair"
+    t.float    "fx_rate"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "groups", :force => true do |t|
     t.string   "group_name"
     t.datetime "created_at"
@@ -101,6 +108,22 @@ ActiveRecord::Schema.define(:version => 20110528113752) do
 
   add_index "projects", ["user_id"], :name => "index_projects_on_user_id"
 
+  create_table "riskpremia", :force => true do |t|
+    t.string   "currency"
+    t.float    "year_one"
+    t.float    "year_two"
+    t.float    "year_three"
+    t.float    "year_four"
+    t.float    "year_five"
+    t.float    "year_six"
+    t.float    "year_seven"
+    t.float    "year_eight"
+    t.float    "year_nine"
+    t.float    "year_ten"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "scenarios", :force => true do |t|
     t.string   "name"
     t.integer  "project_id"
@@ -109,6 +132,22 @@ ActiveRecord::Schema.define(:version => 20110528113752) do
   end
 
   add_index "scenarios", ["project_id"], :name => "index_scenarios_on_project_id"
+
+  create_table "swapcurves", :force => true do |t|
+    t.string   "currency"
+    t.float    "year_one"
+    t.float    "year_two"
+    t.float    "year_three"
+    t.float    "year_four"
+    t.float    "year_five"
+    t.float    "year_six"
+    t.float    "year_seven"
+    t.float    "year_eight"
+    t.float    "year_nine"
+    t.float    "year_ten"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"

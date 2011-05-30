@@ -16,4 +16,9 @@ class PagesController < ApplicationController
       @title = 'pricing'
   end
 
+  def environment
+      @title = 'environment'
+  end
+
+
 end

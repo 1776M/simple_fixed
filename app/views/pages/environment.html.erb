@@ -1,0 +1,24 @@
+<h1><%= @title %></h1>
+
+
+          <ul>
+            <% if current_user %>
+                <% if current_user.name == 'mandeep3' %>
+                    <li><%= link_to "Fx rates", fxrates_path %>
+                        <%= link_to "new", new_fxrate_path %>
+                    </li>
+                    <li>
+                        <%= link_to "Swap curves", swapcurves_path %>
+                        <%= link_to "new", new_swapcurf_path %>
+                    </li>   
+                    <li>
+                        <%= link_to "Risk premia", riskpremia_path %>
+                        <%= link_to "new", new_riskpremium_path %>
+                    </li>   
+                <% else %>
+                    <li><%= link_to "Home", root_path %></li> 
+                <% end %> 
+            <% end %> 
+          </ul>
+
+
