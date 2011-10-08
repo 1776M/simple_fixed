@@ -1,4 +1,4 @@
-<h1>Create user</h1>
+<h1>Create a new user</h1>
 
 <%= form_for @user do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
@@ -20,10 +20,10 @@
   </div>
     <%= hidden_field_tag :group_id, @group.id %>
   <div class="field">
-    <%= f.label :admin %><br />
+    <%= f.label :admin_status %>
     <%= f.check_box :admin %> 
   </div>
   <div class="actions">
-    <%= f.submit "Sign up" %>
+    <%= f.submit "Submit" %>
   </div>
 <% end %>

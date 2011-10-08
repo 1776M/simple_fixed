@@ -19,9 +19,10 @@
     <%= f.password_field :password_confirmation %>
   </div>
   <div class="field">
+    <%= f.label :admin_status %>
     <%= f.check_box :admin %> 
   </div>
   <div class="actions">
-    <%= f.submit "Sign up" %>
+    <%= f.submit "Submit" %>
   </div>
 <% end %>
