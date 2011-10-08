@@ -2,7 +2,9 @@
   <%= @scenario.name %>
 </h1>
 
+<hr><br/>
 
+<h1>EBITDA for the scenario</h1>
 
 <% @actannuals.each do |actannual| %>
    <li>
@@ -27,6 +29,10 @@
       </tr>
 </table>
 <% end %>
+
+<br/><br/><hr><br/>
+
+<h1>Debt portfolio for the scenario</h1>
 
 <% 
      arr = Array.new 
@@ -97,17 +103,21 @@
                 <% end %>
            <% end %>
 
-
-
 <% end %>
 
+<br/><br/><hr><br/>
 
+<h1>Total debt</h1>
 
 <% total = 0 %>
 <% @total_debt.each do |total_debt| %>
      <% total = total_debt.size + total  %>  
 <% end %>
 <%= total %>
+
+<br/><br/><hr><br/>
+
+<h1>Fixed debt</h1>
 
 <% fixed = 0 %>
 <% @fixed_percent.each do |fixed_percent| %>
@@ -119,10 +129,13 @@
   <%= 0 %>
 <% end %>
 
+<br/><br/><hr><br/>
+
+<h1>Currency mix of debt</h1>
 
 <% @currency_percent.each do |currency, debt| %>  
 <% total_currency = 0 %>
-<h2><%= currency %></h2>  
+<h3><%= currency %></h3>  
   <% debt.each do |debt| %>
     <% total_currency = total_currency + debt.size %>  
   <% end %>
@@ -133,12 +146,13 @@
 <% end %>
 <% end %> 
 
+<br/><br/><hr><br/>
 
-
+<h1>Fixed/float mix</h1>
 
 <% @float_percent.each do |fixed_float, debt| %>  
 <% total_float = 0 %>
-<h2><%= fixed_float %></h2>  
+<h3><%= fixed_float %></h3>  
   <% debt.each do |debt| %>
     <% total_float = total_float + debt.size %>  
   <% end %>
@@ -149,10 +163,13 @@
 <% end %>
 <% end %> 
 
+<br/><br/><hr><br/>
+
+<h1>Term mix</h1>
 
 <% @maturity_percent.each do |term, debt| %>  
 <% total_term = 0 %>
-<h2><%= term %> years </h2>  
+<h3><%= term %> years </h3>  
   <% debt.each do |debt| %>
     <% total_term = total_term + debt.size %>  
   <% end %>
@@ -163,10 +180,12 @@
 <% end %>
 <% end %>
 
+<br/><br/><hr><br/>
+
 <h1>Reset risk</h1>
 <% @reset_percent.each do |reset, debt| %>  
 <% total_reset = 0 %>
-<h2><%= reset %> years </h2>  
+<h3><%= reset %> years </h3>  
   <% debt.each do |debt| %>
     <% total_reset = total_reset + debt.size %>  
   <% end %>
@@ -177,14 +196,12 @@
 <% end %>
 <% end %>
 
-
+<br/><br/><hr><br/>
 
 <% if total > 0 %> 
- <h1>Macaulay duration</h1>
+ <h3>Macaulay duration</h3>
  <%= (@scenario.macaulay_duration(@scenario.id)/total).round(2) %>
 <% else %>
    <%= 0 %><br />
 <% end %>  
-
-
 

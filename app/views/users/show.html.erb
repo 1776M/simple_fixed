@@ -1,18 +1,21 @@
 <h1>
   <%= @user.name %>
-  <%= @user.admin ? "admin" : "normal" %>
 </h1>
+
+<hr>
 
 <table class="front" summary="For signed-in users">
     <tr>
       <td class="main">
-        <h1 class="project">Enter a project name</h1>
+        <h3 class="project">Create a new project to analyse</h3>
         <%= render 'shared/project_form' %>
       </td>
     </tr>
 </table>
 
+<hr><br/>
 
+<h3 class="project">Your current projects</h3>
 <% unless @user.projects.empty? %>
      <table class="projects" summary="User projects">
         <%= render @projects %>

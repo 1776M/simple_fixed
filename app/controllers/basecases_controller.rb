@@ -34,7 +34,7 @@ class BasecasesController < ApplicationController
     Basecase.find(params[:id]).destroy
     flash[:success] = "Basecase deleted"
     if current_user.name == 'mandeep3'     
-        redirect_to groups_path
+        redirect_to basecase_path
     else
         redirect_to group_path(current_user.group_id)
     end

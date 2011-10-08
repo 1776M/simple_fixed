@@ -1,8 +1,25 @@
 <h1>
-  <%= @group.group_name %>
-  <%= @group.users.count %>
+  <%= @group.group_name %> 
 </h1>
 
+
+<h3>
+   Financial data
+</h3>  
+
+  <% @basecases.each do |basecase| %>
+     <li>
+       <%= link_to 'Update your business financials', basecase %>
+       <%if current_user.name == 'mandeep3' %>
+
+              <%= link_to "delete", basecase,   :method => :delete,
+                                                :confirm => "You sure?" %>
+      <% end%>
+     </li>
+  <% end %>
+
+<br/><br/>
+<hr>
 
 <table class="front" summary="For signed-in users">
     <tr>
@@ -12,8 +29,9 @@
     </tr>
 </table>
 
+<hr>
 
-<h1>Group members</h1>
+<h3>Current group members</h3>
 <% @users.each do |user| %>
    <li>
      <%= link_to user.name, user %>
@@ -37,17 +55,4 @@
   <% end %>
 <% end %>
 
-<h1>
-   Existing debt portfolio 
-</h1>  
 
-  <% @basecases.each do |basecase| %>
-     <li>
-       <%= link_to basecase.name, basecase %>
-       <%if current_user.name == 'mandeep3' %>
-
-              <%= link_to "delete", basecase,   :method => :delete,
-                                                :confirm => "You sure?" %>
-      <% end%>
-     </li>
-  <% end %>

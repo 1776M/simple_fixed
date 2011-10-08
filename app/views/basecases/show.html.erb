@@ -2,6 +2,8 @@
   <%= @basecase.name %>
 </h1>
 
+<hr>
+
 <h1>EBITDA forecasts</h1>
 
 <% if @basecase.annuals.count < 1%>
@@ -15,7 +17,6 @@
   </table>
 <% end %>
 
-
 <% @annuals.each do |annual| %>
    <li>
      <%= link_to annual.year_one, annual %>
@@ -27,6 +28,8 @@
     
    </li>
 <% end %>
+
+<br/><br/><hr><br/>
 
 <h1>Debt portfolio</h1>
 
@@ -50,6 +53,7 @@
    </li>
 <% end %>
 
+<br/><br/><hr><br/>
 
 <h1>Total debt</h1>
 <% total = 0 %>
@@ -58,6 +62,7 @@
 <% end %>
 <%= total %>
 
+<br/><br/><hr><br/>
 
 <h1>Fixed debt</h1>
 <% fixed = 0 %>
@@ -70,11 +75,12 @@
   <%= 0 %>
 <% end %>
 
+<br/><br/><hr><br/>
 
 <h1>Currency mix of debt</h1>
 <% @currency_percent.each do |currency, debt| %>  
 <% total_currency = 0 %>
-<h2><%= currency %></h2>  
+<h3><%= currency %></h3>  
   <% debt.each do |debt| %>
     <% total_currency = total_currency + debt.size %>  
   <% end %>  
@@ -85,11 +91,12 @@
 <% end %> 
 <% end %>
 
+<br/><br/><hr><br/>
 
 <h1>Floating percentage of debt</h1>
 <% @float_percent.each do |fixed_float, debt| %>  
 <% total_float = 0 %>
-<h2><%= fixed_float %></h2>  
+<h3><%= fixed_float %></h3>  
   <% debt.each do |debt| %>
     <% total_float = total_float + debt.size %>  
   <% end %>  
@@ -100,11 +107,12 @@
 <% end %> 
 <% end %>
 
+<br/><br/><hr><br/>
 
 <h1>Term mix of debt</h1>
 <% @maturity_percent.each do |term, debt| %>  
 <% total_term = 0 %>
-<h2><%= term %> years </h2>  
+<h3><%= term %> years </h3>  
   <% debt.each do |debt| %>
     <% total_term = total_term + debt.size %>  
   <% end %>  
@@ -115,11 +123,12 @@
 <% end %>
 <% end %>
 
+<br/><br/><hr><br/>
 
 <h1>Reset mix of debt</h1>
 <% @reset_percent.each do |term, debt| %>  
 <% total_reset = 0 %>
-<h2><%= term %> years </h2>  
+<h3><%= term %> years </h3>  
   <% debt.each do |debt| %>
     <% total_reset = total_reset + debt.size %>  
   <% end %>  
@@ -130,8 +139,12 @@
 <% end %>
 <% end %>
 
+<br/><br/><hr><br/>
 
 <h1>Macaulay duration</h1>
-<%= (@basecase.macaulay_duration(@basecase.id)/total).round(2) %>
-
+<% if total < 1 %>
+  <%= 0 %>
+<% else %>
+  <%= (@basecase.macaulay_duration(@basecase.id)/total).round(2) %>
+<% end %>
 

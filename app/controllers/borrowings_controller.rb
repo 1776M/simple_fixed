@@ -41,12 +41,15 @@ class BorrowingsController < ApplicationController
   end
 
   def destroy
-    borrowing.find(params[:id]).destroy
+    @basecase = Borrowing.find(params[:id]).basecase
+    Borrowing.find(params[:id]).destroy
     flash[:success] = "Data deleted"
     if current_user.name == 'mandeep3'     
         redirect_to basecase_path
     else
-        redirect_to group_path(current_user.group_id)
+        # redirect_to group_path(current_user.group_id)
+        redirect_to basecase_path(@basecase.id)
+        
     end
   end
   
