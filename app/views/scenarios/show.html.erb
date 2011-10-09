@@ -205,3 +205,8 @@
    <%= 0 %><br />
 <% end %>  
 
+<br/><br/>
+<% require 'gchart' %>
+<img src="<%=Gchart.bar(:data => [total, total*2, 300, 100])%>">
+
+

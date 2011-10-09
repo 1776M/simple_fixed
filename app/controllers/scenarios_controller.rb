@@ -1,8 +1,7 @@
 class ScenariosController < ApplicationController
- 
+
      before_filter :authenticate, :only => [:index, :edit, :update, :destroy]
-     before_filter :correct_user, :only => [:edit, :update, :destroy]
-    
+     before_filter :correct_user, :only => [:edit, :update, :destroy]    
 
   def show
      @scenario = Scenario.find(params[:id])
@@ -20,7 +19,7 @@ class ScenariosController < ApplicationController
      @currency_percent = @scenario.total_debt(params[:id]).group_by{|c| c.currency }
      @float_percent = @scenario.total_debt(params[:id]).group_by{|c| c.fixed_float }
      @maturity_percent = @scenario.total_debt(params[:id]).group_by{|c| c.maturity_year - c.issue_year }
-     @reset_percent = @scenario.total_debt(params[:id]).group_by{|c| c.maturity_year - Time.now.year } 
+     @reset_percent = @scenario.total_debt(params[:id]).group_by{|c| c.maturity_year - Time.now.year }
   end
 
   def create
