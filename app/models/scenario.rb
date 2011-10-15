@@ -6,7 +6,7 @@ class Scenario < ActiveRecord::Base
   
     has_many :actannuals
     has_many :actborrowings
-    has_many :base_cases, :through => :project
+    has_many :basecases, :through => :project
 
     validates :name,       :presence => true
     validates :project_id, :presence => true
@@ -18,7 +18,7 @@ class Scenario < ActiveRecord::Base
 
     
     def fixed_percent(id) 
-        fixed = Actborrowing.find_by_sql(["Select * from Actborrowings where scenario_id=? and fixed_float=?",id,"fixed"])
+        fixed = Actborrowing.find_by_sql(["Select * from Actborrowings where scenario_id=? and fixed_float=?",id,"Fixed"])
     end
 
     def macaulay_duration(id)

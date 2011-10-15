@@ -22,7 +22,7 @@
   </div>
   <div class="field">
     <%= f.label :fixed_float %><br />
-    <%= f.text_field :fixed_float %>
+    <%= f.select :fixed_float, options_for_select([['Fixed','Fixed'],['Float',Float]]) %>
   </div>
   <div class="actions">
     <%= f.submit "Submit" %>

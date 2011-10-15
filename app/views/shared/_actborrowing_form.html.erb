@@ -24,7 +24,7 @@
       </div>
       <div class="field">
         <%= f.label :fixed_float %><br />
-        <%= f.text_field :fixed_float, :value => borrowing.fixed_float %>
+        <%= f.select :fixed_float, options_for_select([['Fixed','Fixed'],['Float',Float]]) %>
       </div>
       <%= f.hidden_field :top_borrowing, :value => borrowing.id %>
       <%= hidden_field_tag :scenario_id, @scenario.id %>

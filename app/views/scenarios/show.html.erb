@@ -32,7 +32,7 @@
 
 <br/><br/><hr><br/>
 
-<h1>Debt portfolio for the scenario</h1>
+<h1>Edit or accept the existing debt portfolio for this scenario</h1>
 
 <% 
      arr = Array.new 
@@ -49,7 +49,6 @@
           <% if actborrowing.top_borrowing == i %> 
               <li>
                   <%= link_to actborrowing.size, actborrowing %>
-                  <%= link_to actborrowing.top_borrowing, actborrowing %>
 
               <%if current_user.admin? || current_user.name=='mandeep3' %>
 
@@ -105,13 +104,65 @@
 
 <% end %>
 
+<h1>Add new debt for this scenario</h1>
+
+      <% @actborrowings.each do |actborrowing| %>
+          <% if actborrowing.top_borrowing.nil? %> 
+              <li>
+                  <%= link_to actborrowing.size, actborrowing %>
+
+              <%if current_user.admin? || current_user.name=='mandeep3' %>
+
+                  <%= link_to "delete", actborrowing,   :method => :delete,
+                                                        :confirm => "You sure?" %>
+                  <%= link_to "edit", edit_actborrowing_path(actborrowing) %>
+              <% end%>
+              </li> 
+         <%  j = 1 %>
+         <% end %>
+     <% next %>
+     <% end %> 
+
+<%= form_for @actborrowing do |f| %>
+                      <%= render 'shared/error_messages', :object => f.object %>
+                      <div class="field">
+                        <%= f.label :size %><br />
+                        <%= f.text_field :size%>
+                      </div>
+                      <div class="field">
+                        <%= f.label :coupon %><br />
+                        <%= f.text_field :coupon%>
+                      </div>
+                      <div class="field">
+                        <%= f.label :issue_year %><br />
+                        <%= f.text_field :issue_year %>
+                     </div>
+                     <div class="field">
+                       <%= f.label :maturity_year %><br />
+                       <%= f.text_field :maturity_year %>
+                     </div>
+                     <div class="field">
+                       <%= f.label :currency %><br />
+                       <%= f.text_field :currency%>
+                     </div>
+                     <div class="field">
+                       <%= f.label :fixed_float %><br />
+                       <%= f.select :fixed_float, options_for_select([['Fixed','Fixed'],['Float',Float]], 'Fixed') %>
+                     </div>
+                     <%= hidden_field_tag :scenario_id, @scenario.id %>
+                     <div class="actions">
+                       <%= f.submit "Submit" %>
+                     </div>
+<% end %>
+
 <br/><br/><hr><br/>
 
 <h1>Total debt</h1>
 
 <% total = 0 %>
 <% @total_debt.each do |total_debt| %>
-     <% total = total_debt.size + total  %>  
+     <% total = total_debt.size + total  %>
+     <%=total %>  
 <% end %>
 <%= total %>
 
@@ -198,15 +249,15 @@
 
 <br/><br/><hr><br/>
 
+<h1>Macaulay duration</h1>
 <% if total > 0 %> 
- <h3>Macaulay duration</h3>
  <%= (@scenario.macaulay_duration(@scenario.id)/total).round(2) %>
 <% else %>
    <%= 0 %><br />
 <% end %>  
 
 <br/><br/>
-<% require 'gchart' %>
+
 <img src="<%=Gchart.bar(:data => [total, total*2, 300, 100])%>">
 
 

@@ -17,7 +17,7 @@ class Basecase < ActiveRecord::Base
 
     
     def fixed_percent(id) 
-        fixed = Borrowing.find_by_sql(["Select * from Borrowings where basecase_id=? and fixed_float=?",id,"fixed"])
+        fixed = Borrowing.find_by_sql(["Select * from Borrowings where basecase_id=? and fixed_float=?",id,"Fixed"])
     end
 
 
