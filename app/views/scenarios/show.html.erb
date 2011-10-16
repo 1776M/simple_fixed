@@ -248,8 +248,30 @@
    <%= 0 %><br />
 <% end %>  
 
-<br/><br/>
+<br/><br/><hr><br/>
 
+<h1>Annul interest expense</h1>
+<% year_count = 0 %>
+<% year_amount = [] %>
+<% year = ['year 1', 'year 2', 'year 3'] %>
+<% year.each do |year|%>
+    
+    <h3><%= year %></h3>
+    <% total = 0 %> 
+    <% @total_debt.each do |total_debt| %>
+         <% if (total_debt.maturity_year - Time.now.year - year_count) > 0 %>            
+            <% total = (total_debt.size * total_debt.coupon) + total  %>
+         <% else %>
+            <% total = total + 0 %>
+         <% end %> 
+    <% end %>
+    <%= total %>
+    <% year_amount << total %> 
+    <% year_count = year_count + 1 %>
+<% end %>
+<br />
+<img src="<%=Gchart.bar(:data => year_amount, :labels => ['year 1', 'year 2', 'year 3'], :bar_width_and_spacing => [19,40], :legend => year_amount)%>">
+<br/><br/>
 
 
 
