@@ -1,0 +1,54 @@
+<%= form_for @forwardcurve do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  <div class="field">
+    <%= f.label :currency %><br />
+    <%= f.text_field :currency %>
+  </div>
+  <div class="field">
+    <%= f.label :term %><br />
+    <%= f.text_field :term %>
+  </div>
+  <div class="field">
+    <%= f.label :year_one %><br />
+    <%= f.text_field :year_one %>
+  </div>
+  <div class="field">
+    <%= f.label :year_two %><br />  
+    <%= f.text_field :year_two %>
+  </div>
+  <div class="field">
+    <%= f.label :year_three %><br />
+    <%= f.text_field :year_three %>
+  </div>
+  <div class="field">
+    <%= f.label :year_four %><br />
+    <%= f.text_field :year_four %>
+  </div>
+  <div class="field">
+    <%= f.label :year_five %><br />
+    <%= f.text_field :year_five %>
+  </div>
+  <div class="field">
+    <%= f.label :year_six %><br />
+    <%= f.text_field :year_six %>
+  </div>
+  <div class="field">
+    <%= f.label :year_seven %><br />
+    <%= f.text_field :year_seven %>
+  </div>
+  <div class="field">
+    <%= f.label :year_eight %><br />
+    <%= f.text_field :year_eight %>
+  </div>
+  <div class="field">
+    <%= f.label :year_nine %><br />
+    <%= f.text_field :year_nine %>
+  </div>
+  <div class="field">
+    <%= f.label :year_ten %><br />
+    <%= f.text_field :year_ten %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Submit" %>
+  </div>
+<% end %>

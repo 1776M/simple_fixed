@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110530174802) do
+ActiveRecord::Schema.define(:version => 20111016120506) do
 
   create_table "actannuals", :force => true do |t|
     t.float    "year_one"
@@ -85,6 +85,23 @@ ActiveRecord::Schema.define(:version => 20110530174802) do
   end
 
   add_index "borrowings", ["basecase_id"], :name => "index_borrowings_on_basecase_id"
+
+  create_table "forwardcurves", :force => true do |t|
+    t.string   "currency"
+    t.float    "term"
+    t.float    "year_one"
+    t.float    "year_two"
+    t.float    "year_three"
+    t.float    "year_four"
+    t.float    "year_five"
+    t.float    "year_six"
+    t.float    "year_seven"
+    t.float    "year_eight"
+    t.float    "year_nine"
+    t.float    "year_ten"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "fxrates", :force => true do |t|
     t.string   "currency_pair"

@@ -11,6 +11,7 @@ SimpleFixed::Application.routes.draw do
   resources :actannuals
   resources :actborrowings
   resources :swapcurves
+  resources :forwardcurves
   resources :fxrates
   resources :riskpremia
 
