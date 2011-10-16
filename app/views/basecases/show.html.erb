@@ -64,87 +64,84 @@
 
 <br/><br/><hr><br/>
 
-<h1>Fixed debt</h1>
-<% fixed = 0 %>
-<% @fixed_percent.each do |fixed_percent| %>
-     <% fixed = fixed_percent.size + fixed  %>  
-<% end %>
-<% if total > 0 %>
-  <%= ((fixed/total)*100).round(2) %>
-<% else %>
-  <%= 0 %>
-<% end %>
+<h1>Fixed/float mix</h1>
+
+<% fixed_float_name = [] %>
+<% fixed_float_amount = []%>
+
+<% @float_percent.each do |fixed_float, debt| %>  
+  <% total_float = 0 %>
+  <h3><%= fixed_float %></h3>
+  <% fixed_float_name << fixed_float %>  
+    <% debt.each do |debt| %>
+      <% total_float = total_float + debt.size %>  
+    <% end %>
+  <% if total > 0 %>  
+    <%= (total_float/total * 100).round(2) %>%
+  <% else %>
+    <%= 0 %>
+  <% end %>
+  <% fixed_float_amount << total_float %>
+<% end %> 
+<br />
+<img src="<%=Gchart.pie(:data => fixed_float_amount, :labels => fixed_float_amount, :legend => fixed_float_name)%>">
 
 <br/><br/><hr><br/>
 
 <h1>Currency mix of debt</h1>
+
+<% currency_name = [] %>
+<% currency_amount = []%>
+
 <% @currency_percent.each do |currency, debt| %>  
-<% total_currency = 0 %>
-<h3><%= currency %></h3>  
-  <% debt.each do |debt| %>
-    <% total_currency = total_currency + debt.size %>  
-  <% end %>  
-<% if total > 0 %>
-  <%= (total_currency/total * 100).round(2) %>
-<% else %>
-  <%= 0 %>
+  <% total_currency = 0 %>
+  <h3><%= currency %></h3>
+  <% currency_name << currency %>      
+    <% debt.each do |debt| %>
+      <% total_currency = total_currency + debt.size %>  
+    <% end %>    
+  <% if total > 0 %>  
+      <%= (total_currency/total * 100).round(2) %>%
+  <% else %>
+    <%= 0 %>
+  <% end %>
+  <% currency_amount << total_currency %>
 <% end %> 
-<% end %>
+<br />
+<img src="<%=Gchart.pie(:data => currency_amount, :labels => currency_amount, :legend => currency_name)%>">
+
 
 <br/><br/><hr><br/>
 
-<h1>Floating percentage of debt</h1>
-<% @float_percent.each do |fixed_float, debt| %>  
-<% total_float = 0 %>
-<h3><%= fixed_float %></h3>  
-  <% debt.each do |debt| %>
-    <% total_float = total_float + debt.size %>  
-  <% end %>  
-<% if total > 0 %>
-  <%= (total_float/total * 100).round(2) %>
-<% else %>
-  <%= 0 %>
-<% end %> 
-<% end %>
+<h1>Term mix</h1>
 
-<br/><br/><hr><br/>
+<% term_name = [] %>
+<% term_amount = []%>
 
-<h1>Term mix of debt</h1>
 <% @maturity_percent.each do |term, debt| %>  
-<% total_term = 0 %>
-<h3><%= term %> years </h3>  
-  <% debt.each do |debt| %>
-    <% total_term = total_term + debt.size %>  
-  <% end %>  
-<% if total > 0 %>
-  <%= (total_term/total * 100).round(2) %>
-<% else %>
-  <%= 0 %>
+  <% total_term = 0 %>
+  <h3><%= term %> years </h3>
+  <% term_name << term %>    
+    <% debt.each do |debt| %>
+      <% total_term = total_term + debt.size %>  
+    <% end %>
+  <% if total > 0 %>   
+      <%= (total_term/total * 100).round(2) %>%
+  <% else %>
+    <%= 0 %>
+  <% end %>
+  <% term_amount << total_term %> 
 <% end %>
-<% end %>
-
-<br/><br/><hr><br/>
-
-<h1>Reset mix of debt</h1>
-<% @reset_percent.each do |term, debt| %>  
-<% total_reset = 0 %>
-<h3><%= term %> years </h3>  
-  <% debt.each do |debt| %>
-    <% total_reset = total_reset + debt.size %>  
-  <% end %>  
-<% if total > 0 %>
-  <%= (total_reset/total * 100).round(2) %>
-<% else %>
-  <%= 0 %>
-<% end %>
-<% end %>
+<br />
+<img src="<%=Gchart.pie(:data => term_amount, :labels => term_amount, :legend => term_name)%>">
 
 <br/><br/><hr><br/>
 
 <h1>Macaulay duration</h1>
-<% if total < 1 %>
-  <%= 0 %>
+<% if total > 0 %> 
+ <%= (@basecase.macaulay_duration(@basecase.id)/total).round(2) %>
 <% else %>
-  <%= (@basecase.macaulay_duration(@basecase.id)/total).round(2) %>
-<% end %>
+   <%= 0 %><br />
+<% end %>  
 
+<br/><br/>
