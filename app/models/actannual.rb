@@ -4,7 +4,10 @@ class Actannual < ActiveRecord::Base
 		      :capex_one, :capex_two, :capex_three, :capex_four, :capex_five, :capex_six, :capex_seven, :capex_eight, :capex_nine, :capex_ten,
                     :rd_one, :rd_two, :rd_three, :rd_four, :rd_five, :rd_six, :rd_seven, :rd_eight, :rd_nine, :rd_ten,
 		      :cashout_one, :cashout_two, :cashout_three, :cashout_four, :cashout_five, :cashout_six, :cashout_seven, :cashout_eight, :cashout_nine, :cashout_ten,
-		      :cashin_one, :cashin_two, :cashin_three, :cashin_four, :cashin_five, :cashin_six, :cashin_seven, :cashin_eight, :cashin_nine, :cashin_ten
+		      :cashin_one, :cashin_two, :cashin_three, :cashin_four, :cashin_five, :cashin_six, :cashin_seven, :cashin_eight, :cashin_nine, :cashin_ten,
+		      :tax_rate, :dividend_policy, :ev_ebitda,
+		      :assets, :cash, :liabs, :equity		
+	
 
     belongs_to :scenario
 
@@ -18,7 +21,7 @@ class Actannual < ActiveRecord::Base
     validates :year_eight,     :presence => true
     validates :year_nine,     :presence => true
     validates :year_ten,     :presence => true
-    validates :basecase_id,  :presence => true
+    validates :scenario_id,  :presence => true
 
     validates :capex_one,     :presence => true
     validates :capex_two,     :presence => true
@@ -63,5 +66,14 @@ class Actannual < ActiveRecord::Base
     validates :cashin_eight,     :presence => true
     validates :cashin_nine,     :presence => true
     validates :cashin_ten,     :presence => true
+
+    validates :tax_rate,     :presence => true
+    validates :dividend_policy,     :presence => true
+    validates :ev_ebitda,     :presence => true
+
+    validates :assets,     :presence => true
+    validates :cash,     :presence => true
+    validates :liabs,     :presence => true
+    validates :equity,     :presence => true
 
 end

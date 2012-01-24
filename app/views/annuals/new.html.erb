@@ -211,6 +211,35 @@
     <%= f.text_field :cashin_ten %>
   </div>
 
+  <div class="field">
+    <%= f.label :tax_rate %><br />
+    <%= f.text_field :tax_rate %>
+  </div>
+  <div class="field">
+    <%= f.label :dividend_policy %><br />
+    <%= f.text_field :dividend_policy %>
+  </div>
+  <div class="field">
+    <%= f.label :ev_ebitda %><br />
+    <%= f.text_field :ev_ebitda %>
+  </div>
+
+  <div class="field">
+    <%= f.label :assets %><br />
+    <%= f.text_field :assets %>
+  </div>
+  <div class="field">
+    <%= f.label :cash %><br />
+    <%= f.text_field :cash %>
+  </div>
+  <div class="field">
+    <%= f.label :liabs %><br />
+    <%= f.text_field :liabs %>
+  </div>
+  <div class="field">
+    <%= f.label :equity %><br />
+    <%= f.text_field :equity %>
+  </div>
 
   <%= hidden_field_tag :basecase_id, @basecase.id %>
   <div class="actions">

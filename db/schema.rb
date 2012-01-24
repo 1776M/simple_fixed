@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120122152439) do
+ActiveRecord::Schema.define(:version => 20120123214114) do
 
   create_table "actannuals", :force => true do |t|
     t.float    "year_one"
@@ -66,6 +66,13 @@ ActiveRecord::Schema.define(:version => 20120122152439) do
     t.integer  "scenario_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "tax_rate"
+    t.float    "dividend_policy"
+    t.float    "ev_ebitda"
+    t.float    "assets"
+    t.float    "cash"
+    t.float    "liabs"
+    t.float    "equity"
   end
 
   add_index "actannuals", ["scenario_id"], :name => "index_actannuals_on_scenario_id"
@@ -139,6 +146,13 @@ ActiveRecord::Schema.define(:version => 20120122152439) do
     t.integer  "basecase_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "tax_rate"
+    t.float    "dividend_policy"
+    t.float    "ev_ebitda"
+    t.float    "assets"
+    t.float    "cash"
+    t.float    "liabs"
+    t.float    "equity"
   end
 
   add_index "annuals", ["basecase_id"], :name => "index_annuals_on_basecase_id"

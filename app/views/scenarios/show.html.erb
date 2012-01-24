@@ -6,6 +6,264 @@
 
 <h1>EBITDA for the scenario</h1>
 
+<% if @scenario.actannuals.count < 1 %>
+<table class="front" summary="For signed-in users">
+      <tr>
+        <td class="main">
+  
+            <%= form_for @actannual do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  <div class="field">
+    <%= f.label :year_one %><br />
+    <%= f.text_field :year_one, :value => @annual.year_one %>
+  </div>
+  <div class="field">
+    <%= f.label :year_two %><br />  
+    <%= f.text_field :year_two, :value => @annual.year_two %>
+  </div>
+  <div class="field">
+    <%= f.label :year_three %><br />
+    <%= f.text_field :year_three, :value => @annual.year_three %>
+  </div>
+  <div class="field">
+    <%= f.label :year_four %><br />
+    <%= f.text_field :year_four, :value => @annual.year_four %>
+  </div>
+  <div class="field">
+    <%= f.label :year_five %><br />
+    <%= f.text_field :year_five, :value => @annual.year_five %>
+  </div>
+  <div class="field">
+    <%= f.label :year_six %><br />
+    <%= f.text_field :year_six, :value => @annual.year_six %>
+  </div>
+  <div class="field">
+    <%= f.label :year_seven %><br />
+    <%= f.text_field :year_seven, :value => @annual.year_seven %>
+  </div>
+  <div class="field">
+    <%= f.label :year_eight %><br />
+    <%= f.text_field :year_eight, :value => @annual.year_eight %>
+  </div>
+  <div class="field">
+    <%= f.label :year_nine %><br />
+    <%= f.text_field :year_nine, :value => @annual.year_nine %>
+  </div>
+  <div class="field">
+    <%= f.label :year_ten %><br />
+    <%= f.text_field :year_ten, :value => @annual.year_ten %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label :capex_one %><br />
+    <%= f.text_field :capex_one, :value => @annual.capex_one %>
+  </div>
+  <div class="field">
+    <%= f.label :capex_two %><br />  
+    <%= f.text_field :capex_two, :value => @annual.capex_two %>
+  </div>
+  <div class="field">
+    <%= f.label :capex_three %><br />
+    <%= f.text_field :capex_three, :value => @annual.capex_three %>
+  </div>
+  <div class="field">
+    <%= f.label :capex_four %><br />
+    <%= f.text_field :capex_four, :value => @annual.capex_four %>
+  </div>
+  <div class="field">
+    <%= f.label :capex_five %><br />
+    <%= f.text_field :capex_five, :value => @annual.capex_five %>
+  </div>
+  <div class="field">
+    <%= f.label :capex_six %><br />
+    <%= f.text_field :capex_six, :value => @annual.capex_six %>
+  </div>
+  <div class="field">
+    <%= f.label :capex_seven %><br />
+    <%= f.text_field :capex_seven, :value => @annual.capex_seven %>
+  </div>
+  <div class="field">
+    <%= f.label :capex_eight %><br />
+    <%= f.text_field :capex_eight, :value => @annual.capex_eight %>
+  </div>
+  <div class="field">
+    <%= f.label :capex_nine %><br />
+    <%= f.text_field :capex_nine, :value => @annual.capex_nine %>
+  </div>
+  <div class="field">
+    <%= f.label :capex_ten %><br />
+    <%= f.text_field :capex_ten, :value => @annual.capex_ten %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label :rd_one %><br />
+    <%= f.text_field :rd_one, :value => @annual.rd_one %>
+  </div>
+  <div class="field">
+    <%= f.label :rd_two %><br />  
+    <%= f.text_field :rd_two, :value => @annual.rd_two %>
+  </div>
+  <div class="field">
+    <%= f.label :rd_three %><br />
+    <%= f.text_field :rd_three, :value => @annual.rd_three %>
+  </div>
+  <div class="field">
+    <%= f.label :rd_four %><br />
+    <%= f.text_field :rd_four, :value => @annual.rd_four %>
+  </div>
+  <div class="field">
+    <%= f.label :rd_five %><br />
+    <%= f.text_field :rd_five, :value => @annual.rd_five %>
+  </div>
+  <div class="field">
+    <%= f.label :rd_six %><br />
+    <%= f.text_field :rd_six, :value => @annual.rd_six %>
+  </div>
+  <div class="field">
+    <%= f.label :rd_seven %><br />
+    <%= f.text_field :rd_seven, :value => @annual.rd_seven %>
+  </div>
+  <div class="field">
+    <%= f.label :rd_eight %><br />
+    <%= f.text_field :rd_eight, :value => @annual.rd_eight %>
+  </div>
+  <div class="field">
+    <%= f.label :rd_nine %><br />
+    <%= f.text_field :rd_nine, :value => @annual.rd_nine %>
+  </div>
+  <div class="field">
+    <%= f.label :rd_ten %><br />
+    <%= f.text_field :rd_ten, :value => @annual.rd_ten %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label :cashout_one %><br />
+    <%= f.text_field :cashout_one, :value => @annual.cashout_one %>
+  </div>
+  <div class="field">
+    <%= f.label :cashout_two %><br />  
+    <%= f.text_field :cashout_two, :value => @annual.cashout_two %>
+  </div>
+  <div class="field">
+    <%= f.label :cashout_three %><br />
+    <%= f.text_field :cashout_three, :value => @annual.cashout_three %>
+  </div>
+  <div class="field">
+    <%= f.label :cashout_four %><br />
+    <%= f.text_field :cashout_four, :value => @annual.cashout_four %>
+  </div>
+  <div class="field">
+    <%= f.label :cashout_five %><br />
+    <%= f.text_field :cashout_five, :value => @annual.cashout_five %>
+  </div>
+  <div class="field">
+    <%= f.label :cashout_six %><br />
+    <%= f.text_field :cashout_six, :value => @annual.cashout_six %>
+  </div>
+  <div class="field">
+    <%= f.label :cashout_seven %><br />
+    <%= f.text_field :cashout_seven, :value => @annual.cashout_seven %>
+  </div>
+  <div class="field">
+    <%= f.label :cashout_eight %><br />
+    <%= f.text_field :cashout_eight, :value => @annual.cashout_eight %>
+  </div>
+  <div class="field">
+    <%= f.label :cashout_nine %><br />
+    <%= f.text_field :cashout_nine, :value => @annual.cashout_nine %>
+  </div>
+  <div class="field">
+    <%= f.label :cashout_ten %><br />
+    <%= f.text_field :cashout_ten, :value => @annual.cashout_ten %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label :cashin_one %><br />
+    <%= f.text_field :cashin_one, :value => @annual.cashin_one %>
+  </div>
+  <div class="field">
+    <%= f.label :cashin_two %><br />  
+    <%= f.text_field :cashin_two, :value => @annual.cashin_two %>
+  </div>
+  <div class="field">
+    <%= f.label :cashin_three %><br />
+    <%= f.text_field :cashin_three, :value => @annual.cashin_three %>
+  </div>
+  <div class="field">
+    <%= f.label :cashin_four %><br />
+    <%= f.text_field :cashin_four, :value => @annual.cashin_four %>
+  </div>
+  <div class="field">
+    <%= f.label :cashin_five %><br />
+    <%= f.text_field :cashin_five, :value => @annual.cashin_five %>
+  </div>
+  <div class="field">
+    <%= f.label :cashin_six %><br />
+    <%= f.text_field :cashin_six, :value => @annual.cashin_six %>
+  </div>
+  <div class="field">
+    <%= f.label :cashin_seven %><br />
+    <%= f.text_field :cashin_seven, :value => @annual.cashin_seven %>
+  </div>
+  <div class="field">
+    <%= f.label :cashin_eight %><br />
+    <%= f.text_field :cashin_eight, :value => @annual.cashin_eight %>
+  </div>
+  <div class="field">
+    <%= f.label :cashin_nine %><br />
+    <%= f.text_field :cashin_nine, :value => @annual.cashin_nine %>
+  </div>
+  <div class="field">
+    <%= f.label :cashin_ten %><br />
+    <%= f.text_field :cashin_ten, :value => @annual.cashin_ten %>
+  </div>
+
+  <div class="field">
+    <%= f.label :tax_rate %><br />
+    <%= f.text_field :tax_rate, :value => @annual.tax_rate %>
+  </div>
+  <div class="field">
+    <%= f.label :dividend_policy %><br />
+    <%= f.text_field :dividend_policy, :value => @annual.dividend_policy %>
+  </div>
+  <div class="field">
+    <%= f.label :ev_ebitda %><br />
+    <%= f.text_field :ev_ebitda, :value => @annual.ev_ebitda %>
+  </div>
+
+  <div class="field">
+    <%= f.label :assets %><br />
+    <%= f.text_field :assets, :value => @annual.assets %>
+  </div>
+  <div class="field">
+    <%= f.label :cash %><br />
+    <%= f.text_field :cash, :value => @annual.cash %>
+  </div>
+  <div class="field">
+    <%= f.label :liabs %><br />
+    <%= f.text_field :liabs, :value => @annual.liabs %>
+  </div>
+  <div class="field">
+    <%= f.label :equity %><br />
+    <%= f.text_field :equity, :value => @annual.equity %>
+  </div>
+
+  <%= hidden_field_tag :scenario_id, @scenario.id %>
+  <div class="actions">
+    <%= f.submit "Submit" %>
+  </div>
+<% end %>
+
+        </td>
+      </tr>
+</table>
+<% end %>
+
+
 <% @actannuals.each do |actannual| %>
    <li>
      <%= link_to actannual.year_one, actannual %>
@@ -17,17 +275,6 @@
     <% end %>
     
    </li>
-<% end %>
-
-
-<% if @scenario.actannuals.count < 1 %>
-<table class="front" summary="For signed-in users">
-      <tr>
-        <td class="main">
-          <%= render 'shared/actannual_form' %>
-        </td>
-      </tr>
-</table>
 <% end %>
 
 <br/><br/><hr><br/>
