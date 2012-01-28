@@ -204,7 +204,9 @@
      <% else %>
          <%= 0 %><br />
      <% end %>
-     <% duration_amount << (scenario.macaulay_duration(scenario.id)/total).round(2) %>  
+     <% if total > 0 %>
+         <% duration_amount << (scenario.macaulay_duration(scenario.id)/total).round(2) %>  
+     <% end %>
 <% end %>
 <br />
 <img src="<%=Gchart.bar(:data => duration_amount, :labels => duration_name, :bar_width_and_spacing => [19,40], :legend => duration_amount)%>">
