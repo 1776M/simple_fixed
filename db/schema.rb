@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120123214114) do
+ActiveRecord::Schema.define(:version => 20120205101501) do
 
   create_table "actannuals", :force => true do |t|
     t.float    "year_one"
@@ -73,6 +73,16 @@ ActiveRecord::Schema.define(:version => 20120123214114) do
     t.float    "cash"
     t.float    "liabs"
     t.float    "equity"
+    t.float    "USD_EBITDA"
+    t.float    "GBP_EBITDA"
+    t.float    "EUR_EBITDA"
+    t.float    "YEN_EBITDA"
+    t.float    "BRL_EBITDA"
+    t.float    "USD_net_assets"
+    t.float    "GBP_net_assets"
+    t.float    "EUR_net_assets"
+    t.float    "YEN_net_assets"
+    t.float    "BRL_net_assets"
   end
 
   add_index "actannuals", ["scenario_id"], :name => "index_actannuals_on_scenario_id"
@@ -153,6 +163,16 @@ ActiveRecord::Schema.define(:version => 20120123214114) do
     t.float    "cash"
     t.float    "liabs"
     t.float    "equity"
+    t.float    "USD_EBITDA"
+    t.float    "GBP_EBITDA"
+    t.float    "EUR_EBITDA"
+    t.float    "YEN_EBITDA"
+    t.float    "BRL_EBITDA"
+    t.float    "USD_net_assets"
+    t.float    "GBP_net_assets"
+    t.float    "EUR_net_assets"
+    t.float    "YEN_net_assets"
+    t.float    "BRL_net_assets"
   end
 
   add_index "annuals", ["basecase_id"], :name => "index_annuals_on_basecase_id"

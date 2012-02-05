@@ -239,6 +239,47 @@
     <%= f.text_field :equity %>
   </div>
 
+  <div class="field">
+    <%= f.label :USD_EBITDA %><br />
+    <%= f.text_field :USD_EBITDA %>
+  </div>
+  <div class="field">
+    <%= f.label :GBP_EBITDA %><br />
+    <%= f.text_field :GBP_EBITDA %>
+  </div>
+  <div class="field">
+    <%= f.label :EUR_EBITDA %><br />
+    <%= f.text_field :EUR_EBITDA %>
+  </div>
+  <div class="field">
+    <%= f.label :YEN_EBITDA %><br />
+    <%= f.text_field :YEN_EBITDA %>
+  </div>
+  <div class="field">
+    <%= f.label :BRL_EBITDA %><br />
+    <%= f.text_field :BRL_EBITDA %>
+  </div>
+  <div class="field">
+    <%= f.label :USD_net_assets %><br />
+    <%= f.text_field :USD_net_assets %>
+  </div>
+  <div class="field">
+    <%= f.label :GBP_net_assets %><br />
+    <%= f.text_field :GBP_net_assets %>
+  </div>
+  <div class="field">
+    <%= f.label :EUR_net_assets %><br />
+    <%= f.text_field :EUR_net_assets %>
+  </div>
+  <div class="field">
+    <%= f.label :YEN_net_assets %><br />
+    <%= f.text_field :YEN_net_assets %>
+  </div>
+  <div class="field">
+    <%= f.label :BRL_net_assets %><br />
+    <%= f.text_field :BRL_net_assets %>
+  </div>
+
   <%= hidden_field_tag :scenario_id, @scenario.id %>
   <div class="actions">
     <%= f.submit "Submit" %>

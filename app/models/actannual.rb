@@ -6,7 +6,9 @@ class Actannual < ActiveRecord::Base
 		      :cashout_one, :cashout_two, :cashout_three, :cashout_four, :cashout_five, :cashout_six, :cashout_seven, :cashout_eight, :cashout_nine, :cashout_ten,
 		      :cashin_one, :cashin_two, :cashin_three, :cashin_four, :cashin_five, :cashin_six, :cashin_seven, :cashin_eight, :cashin_nine, :cashin_ten,
 		      :tax_rate, :dividend_policy, :ev_ebitda,
-		      :assets, :cash, :liabs, :equity		
+		      :assets, :cash, :liabs, :equity,
+                    :USD_EBITDA, :GBP_EBITDA, :EUR_EBITDA, :YEN_EBITDA, :BRL_EBITDA, :USD_net_assets, :GBP_net_assets, :EUR_net_assets, :YEN_net_assets, :BRL_net_assets 		
+		
 	
 
     belongs_to :scenario
@@ -75,5 +77,16 @@ class Actannual < ActiveRecord::Base
     validates :cash,     :presence => true
     validates :liabs,     :presence => true
     validates :equity,     :presence => true
+
+    validates :USD_EBITDA,     :presence => true
+    validates :GBP_EBITDA,     :presence => true
+    validates :EUR_EBITDA,     :presence => true
+    validates :YEN_EBITDA,     :presence => true
+    validates :BRL_EBITDA,     :presence => true
+    validates :USD_net_assets,     :presence => true
+    validates :GBP_net_assets,     :presence => true
+    validates :EUR_net_assets,     :presence => true
+    validates :YEN_net_assets,     :presence => true
+    validates :BRL_net_assets,     :presence => true
 
 end
