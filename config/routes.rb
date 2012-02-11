@@ -14,6 +14,7 @@ SimpleFixed::Application.routes.draw do
   resources :forwardcurves
   resources :fxrates
   resources :riskpremia
+  resources :choleskies
 
   match '/signup',      :to => 'users#new'
   match '/demo',        :to => 'pages#demo'

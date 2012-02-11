@@ -1,0 +1,65 @@
+<h1>
+  <%= @cholesky.USD_USD_EBITDA %>   
+</h1>
+
+    <%= link_to "edit", edit_cholesky_path(@cholesky.id) %>
+
+<%= Matrix[[@cholesky.USD_USD_EBITDA*25,15,-5],
+           [15,18,0],
+           [-5,0,11]].cholesky_factor %> 
+
+
+
+<%=
+   m_cholesky =
+    Matrix[[@cholesky.USD_USD_EBITDA, @cholesky.USD_EUR_EBITDA, @cholesky.USD_GBP_EBITDA, @cholesky.USD_YEN_EBITDA, @cholesky.USD_BRL_EBITDA, @cholesky.USD_fx12_EBITDA, @cholesky.USD_fx13_EBITDA, @cholesky.USD_fx14_EBITDA, @cholesky.USD_fx15_EBITDA,],
+	    [@cholesky.EUR_USD_EBITDA, @cholesky.EUR_EUR_EBITDA, @cholesky.EUR_GBP_EBITDA, @cholesky.EUR_YEN_EBITDA, @cholesky.EUR_BRL_EBITDA, @cholesky.EUR_fx12_EBITDA, @cholesky.EUR_fx13_EBITDA, @cholesky.EUR_fx14_EBITDA, @cholesky.EUR_fx15_EBITDA,],
+           [@cholesky.GBP_USD_EBITDA, @cholesky.GBP_EUR_EBITDA, @cholesky.GBP_GBP_EBITDA, @cholesky.GBP_YEN_EBITDA, @cholesky.GBP_BRL_EBITDA, @cholesky.GBP_fx12_EBITDA, @cholesky.GBP_fx13_EBITDA, @cholesky.GBP_fx14_EBITDA, @cholesky.GBP_fx15_EBITDA,],
+           [@cholesky.YEN_USD_EBITDA, @cholesky.YEN_EUR_EBITDA, @cholesky.YEN_GBP_EBITDA, @cholesky.YEN_YEN_EBITDA, @cholesky.YEN_BRL_EBITDA, @cholesky.YEN_fx12_EBITDA, @cholesky.YEN_fx13_EBITDA, @cholesky.YEN_fx14_EBITDA, @cholesky.YEN_fx15_EBITDA,],
+           [@cholesky.BRL_USD_EBITDA, @cholesky.BRL_EUR_EBITDA, @cholesky.BRL_GBP_EBITDA, @cholesky.BRL_YEN_EBITDA, @cholesky.BRL_BRL_EBITDA, @cholesky.BRL_fx12_EBITDA, @cholesky.BRL_fx13_EBITDA, @cholesky.BRL_fx14_EBITDA, @cholesky.BRL_fx15_EBITDA,],
+           [@cholesky.fx12_USD_EBITDA, @cholesky.fx12_EUR_EBITDA, @cholesky.fx12_GBP_EBITDA, @cholesky.fx12_YEN_EBITDA, @cholesky.fx12_BRL_EBITDA, @cholesky.fx12_fx12_EBITDA, @cholesky.fx12_fx13_EBITDA, @cholesky.fx12_fx14_EBITDA, @cholesky.fx12_fx15_EBITDA,],
+           [@cholesky.fx13_USD_EBITDA, @cholesky.fx13_EUR_EBITDA, @cholesky.fx13_GBP_EBITDA, @cholesky.fx13_YEN_EBITDA, @cholesky.fx13_BRL_EBITDA, @cholesky.fx13_fx12_EBITDA, @cholesky.fx13_fx13_EBITDA, @cholesky.fx13_fx14_EBITDA, @cholesky.fx13_fx15_EBITDA,],
+           [@cholesky.fx14_USD_EBITDA, @cholesky.fx14_EUR_EBITDA, @cholesky.fx14_GBP_EBITDA, @cholesky.fx14_YEN_EBITDA, @cholesky.fx14_BRL_EBITDA, @cholesky.fx14_fx12_EBITDA, @cholesky.fx14_fx13_EBITDA, @cholesky.fx14_fx14_EBITDA, @cholesky.fx14_fx15_EBITDA,],
+           [@cholesky.fx15_USD_EBITDA, @cholesky.fx15_EUR_EBITDA, @cholesky.fx15_GBP_EBITDA, @cholesky.fx15_YEN_EBITDA, @cholesky.fx15_BRL_EBITDA, @cholesky.fx15_fx12_EBITDA, @cholesky.fx15_fx13_EBITDA, @cholesky.fx15_fx14_EBITDA, @cholesky.fx15_fx15_EBITDA] 
+          ].cholesky_factor
+%>
+<br/><br/>
+<% 
+   m_rand = Matrix[[rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand(),rand()]   
+                 ]
+
+ %>
+
+<%=
+    
+    m_rand[0,1]
+
+%>
+
+<br/><br/>
+
+<%=
+    
+    m_rand*m_cholesky
+
+%>
+<br /><br />
+
+
+
