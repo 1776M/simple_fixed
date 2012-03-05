@@ -173,6 +173,26 @@
 
 <h1>FX risk</h1>
 
+<%
+
+    # need to define the variables outside loops to be able to use them later on
+
+    m_USD_EBITDA_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15]
+    m_EUR_EBITDA_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15]
+    m_GBP_EBITDA_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15]
+    m_YEN_EBITDA_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15]
+    m_BRL_EBITDA_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15]
+    m_EURUSD_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15]
+    m_EURGBP_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15]
+    m_EURYEN_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15]
+    m_EURBRL_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15] 
+
+    m_correlated = Array.new(9){Array.new(17){Array.new(10){0}}}
+    m_simulated = Array.new(9){Array.new(17){Array.new(10){0}}}
+    m_market_data = Array.new(9){Array.new(13){0}}
+
+%>
+
 <% @cholesky.each do |@cholesky| %>
 <%
     m_decomped =
@@ -187,9 +207,6 @@
            [@cholesky.fx15_USD_EBITDA, @cholesky.fx15_EUR_EBITDA, @cholesky.fx15_GBP_EBITDA, @cholesky.fx15_YEN_EBITDA, @cholesky.fx15_BRL_EBITDA, @cholesky.fx15_fx12_EBITDA, @cholesky.fx15_fx13_EBITDA, @cholesky.fx15_fx14_EBITDA, @cholesky.fx15_fx15_EBITDA] 
           ].cholesky_factor
 
-
-    m_correlated = Array.new(9){Array.new(17){Array.new(10){0}} }
-    m_simulated = Array.new(9){Array.new(17){Array.new(10){0}} }
 
     h = 0
     for h in 0...10
@@ -308,23 +325,70 @@
 <br/><br/><hr><br/>
 
 <h1>Annul FX interest expense</h1>
-<% year_count = 0 %>
+<% year_count = 0 # need to set year count back to zero after interest expense calculation above %>
 <% year_amount = [] %>
 <% year = ['year 1', 'year 2', 'year 3'] %>
 <% year.each do |year|%>
     
     <h3><%= year %></h3>
-    <% total = 0 %> 
-    <% @total_debt.each do |total_debt| %>
-         <% if (total_debt.maturity_year - Time.now.year - year_count) > 0 %>            
-            <% total = (total_debt.size * total_debt.coupon) + total  %>
-         <% else %>
-            <% total = total + 0 %>
-         <% end %> 
+    <% m_interest_expense = Array.new(17){0}%>
+    <% for i in 0...17 %>
+        <% total = 0 %> 
+            <% @total_debt.each do |total_debt| %>
+                <% if (total_debt.maturity_year - Time.now.year - year_count) > 0 %>            
+                    <% total = (total_debt.size * total_debt.coupon) + total  %>
+                    <% if total_debt.currency == 'EUR' %>
+                        <% total = total + 0 %> 
+                    <% end %> 
+                    <% if total_debt.currency == 'USD' %>
+                        <% total = total/m_simulated[5][i][1] %> 
+                    <% end %> 
+                    <% if total_debt.currency == 'GBP' %>
+                        <% total = total/m_simulated[6][i][1] %> 
+                    <% end %> 
+                    <% if total_debt.currency == 'YEN' %>
+                        <% total = total/m_simulated[7][i][1] %> 
+                    <% end %> 
+                    <% if total_debt.currency == 'BRL' %>
+                        <% total = total/m_simulated[8][i][1] %> 
+                    <% end %> 
+                <% else %>
+                    <% total = total + 0 %>
+                <% end %> 
+            <% end %>
+        <% m_interest_expense[i] = total  %>
     <% end %>
-    <%= total %>
-    <% year_amount << total %> 
+    Mean: <br/>
+    <%= m_interest_expense.mean_it.round(2) %><br/>
+    Standard deviation: <br/>
+    <%= m_interest_expense.standard_deviation_it.round(2) %></br>
+    Percentiles <br/>
+    99%: 
+    <%= m_interest_expense.calculate_percentile(0.99).round(2) %></br>
+    95%: 
+    <%= m_interest_expense.calculate_percentile(0.95).round(2) %></br>
+    85%:
+    <%= m_interest_expense.calculate_percentile(0.85).round(2) %></br>
+    75%:  
+    <%= m_interest_expense.calculate_percentile(0.75).round(2) %></br>
+    67%: 
+    <%= m_interest_expense.calculate_percentile(0.67).round(2) %></br>
+    50%:
+    <%= m_interest_expense.calculate_percentile(0.50).round(2) %></br>
+    33%:
+    <%= m_interest_expense.calculate_percentile(0.33).round(2) %></br>
+    25%:
+    <%= m_interest_expense.calculate_percentile(0.25).round(2) %></br>
+    15%:
+    <%= m_interest_expense.calculate_percentile(0.15).round(2) %></br>
+    5%:
+     <%= m_interest_expense.calculate_percentile(0.05).round(2) %></br>
+    1%:
+    <%= m_interest_expense.calculate_percentile(0.01).round(2) %></br>
+    <% year_amount << m_interest_expense.mean_it.round(2) %>
     <% year_count = year_count + 1 %>
 <% end %>
+
 <br />
+<img src="<%=Gchart.bar(:data => year_amount, :labels => ['year 1', 'year 2', 'year 3'], :bar_width_and_spacing => [19,40], :legend => year_amount)%>">
 <br/><br/>
