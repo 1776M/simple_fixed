@@ -168,3 +168,163 @@
 <br />
 <img src="<%=Gchart.bar(:data => year_amount, :labels => ['year 1', 'year 2', 'year 3'], :bar_width_and_spacing => [19,40], :legend => year_amount)%>">
 <br/><br/>
+
+<hr><br/>
+
+<h1>FX risk</h1>
+
+<% @cholesky.each do |@cholesky| %>
+<%
+    m_decomped =
+    Matrix[[@cholesky.USD_USD_EBITDA, @cholesky.USD_EUR_EBITDA, @cholesky.USD_GBP_EBITDA, @cholesky.USD_YEN_EBITDA, @cholesky.USD_BRL_EBITDA, @cholesky.USD_fx12_EBITDA, @cholesky.USD_fx13_EBITDA, @cholesky.USD_fx14_EBITDA, @cholesky.USD_fx15_EBITDA,],
+	    [@cholesky.EUR_USD_EBITDA, @cholesky.EUR_EUR_EBITDA, @cholesky.EUR_GBP_EBITDA, @cholesky.EUR_YEN_EBITDA, @cholesky.EUR_BRL_EBITDA, @cholesky.EUR_fx12_EBITDA, @cholesky.EUR_fx13_EBITDA, @cholesky.EUR_fx14_EBITDA, @cholesky.EUR_fx15_EBITDA,],
+           [@cholesky.GBP_USD_EBITDA, @cholesky.GBP_EUR_EBITDA, @cholesky.GBP_GBP_EBITDA, @cholesky.GBP_YEN_EBITDA, @cholesky.GBP_BRL_EBITDA, @cholesky.GBP_fx12_EBITDA, @cholesky.GBP_fx13_EBITDA, @cholesky.GBP_fx14_EBITDA, @cholesky.GBP_fx15_EBITDA,],
+           [@cholesky.YEN_USD_EBITDA, @cholesky.YEN_EUR_EBITDA, @cholesky.YEN_GBP_EBITDA, @cholesky.YEN_YEN_EBITDA, @cholesky.YEN_BRL_EBITDA, @cholesky.YEN_fx12_EBITDA, @cholesky.YEN_fx13_EBITDA, @cholesky.YEN_fx14_EBITDA, @cholesky.YEN_fx15_EBITDA,],
+           [@cholesky.BRL_USD_EBITDA, @cholesky.BRL_EUR_EBITDA, @cholesky.BRL_GBP_EBITDA, @cholesky.BRL_YEN_EBITDA, @cholesky.BRL_BRL_EBITDA, @cholesky.BRL_fx12_EBITDA, @cholesky.BRL_fx13_EBITDA, @cholesky.BRL_fx14_EBITDA, @cholesky.BRL_fx15_EBITDA,],
+           [@cholesky.fx12_USD_EBITDA, @cholesky.fx12_EUR_EBITDA, @cholesky.fx12_GBP_EBITDA, @cholesky.fx12_YEN_EBITDA, @cholesky.fx12_BRL_EBITDA, @cholesky.fx12_fx12_EBITDA, @cholesky.fx12_fx13_EBITDA, @cholesky.fx12_fx14_EBITDA, @cholesky.fx12_fx15_EBITDA,],
+           [@cholesky.fx13_USD_EBITDA, @cholesky.fx13_EUR_EBITDA, @cholesky.fx13_GBP_EBITDA, @cholesky.fx13_YEN_EBITDA, @cholesky.fx13_BRL_EBITDA, @cholesky.fx13_fx12_EBITDA, @cholesky.fx13_fx13_EBITDA, @cholesky.fx13_fx14_EBITDA, @cholesky.fx13_fx15_EBITDA,],
+           [@cholesky.fx14_USD_EBITDA, @cholesky.fx14_EUR_EBITDA, @cholesky.fx14_GBP_EBITDA, @cholesky.fx14_YEN_EBITDA, @cholesky.fx14_BRL_EBITDA, @cholesky.fx14_fx12_EBITDA, @cholesky.fx14_fx13_EBITDA, @cholesky.fx14_fx14_EBITDA, @cholesky.fx14_fx15_EBITDA,],
+           [@cholesky.fx15_USD_EBITDA, @cholesky.fx15_EUR_EBITDA, @cholesky.fx15_GBP_EBITDA, @cholesky.fx15_YEN_EBITDA, @cholesky.fx15_BRL_EBITDA, @cholesky.fx15_fx12_EBITDA, @cholesky.fx15_fx13_EBITDA, @cholesky.fx15_fx14_EBITDA, @cholesky.fx15_fx15_EBITDA] 
+          ].cholesky_factor
+
+
+    m_correlated = Array.new(9){Array.new(17){Array.new(10){0}} }
+    m_simulated = Array.new(9){Array.new(17){Array.new(10){0}} }
+
+    h = 0
+    for h in 0...10
+        i = 0
+        for i in 0...9
+            j=0
+            for j in 0...9
+                k = 0
+                for k in 0...17
+                    m_correlated[i][k][h] = m_correlated[i][k][h] + (m_decomped[i,j] * rand()) 
+                end
+            end
+        end
+    end
+
+
+    # need to generate an EBITDA_curve from the annuals data
+
+    m_EURUSD_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15]
+    m_EURGBP_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15]
+    m_EURYEN_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15]
+    m_EURBRL_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15]
+    m_EURUSD_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15]
+    m_EURGBP_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15]
+    m_EURYEN_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15]
+    m_EURBRL_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15] 
+
+
+    @annuals.each do |@annuals|
+
+        m_USD_EBITDA_curve = [@annuals.year_one*@annuals.USD_EBITDA, @annuals.year_one*@annuals.USD_EBITDA, @annuals.year_two*@annuals.USD_EBITDA, @annuals.year_three*@annuals.USD_EBITDA, 
+                              @annuals.year_four*@annuals.USD_EBITDA, @annuals.year_five*@annuals.USD_EBITDA,@annuals.year_six*@annuals.USD_EBITDA, @annuals.year_seven*@annuals.USD_EBITDA,
+                              @annuals.year_eight*@annuals.USD_EBITDA, @annuals.year_nine*@annuals.USD_EBITDA, @annuals.year_ten*@annuals.USD_EBITDA, 0.2, 0.15]
+        m_EUR_EBITDA_curve = [@annuals.year_one*@annuals.EUR_EBITDA, @annuals.year_one*@annuals.EUR_EBITDA, @annuals.year_two*@annuals.EUR_EBITDA, @annuals.year_three*@annuals.EUR_EBITDA, 
+                              @annuals.year_four*@annuals.EUR_EBITDA, @annuals.year_five*@annuals.EUR_EBITDA,@annuals.year_six*@annuals.EUR_EBITDA, @annuals.year_seven*@annuals.EUR_EBITDA,
+                              @annuals.year_eight*@annuals.EUR_EBITDA, @annuals.year_nine*@annuals.EUR_EBITDA, @annuals.year_ten*@annuals.EUR_EBITDA, 0.2, 0.15]
+        m_GBP_EBITDA_curve = [@annuals.year_one*@annuals.GBP_EBITDA, @annuals.year_one*@annuals.GBP_EBITDA, @annuals.year_two*@annuals.GBP_EBITDA, @annuals.year_three*@annuals.GBP_EBITDA, 
+                              @annuals.year_four*@annuals.GBP_EBITDA, @annuals.year_five*@annuals.GBP_EBITDA,@annuals.year_six*@annuals.GBP_EBITDA, @annuals.year_seven*@annuals.GBP_EBITDA,
+                              @annuals.year_eight*@annuals.GBP_EBITDA, @annuals.year_nine*@annuals.GBP_EBITDA, @annuals.year_ten*@annuals.GBP_EBITDA, 0.2, 0.15]
+        m_YEN_EBITDA_curve = [@annuals.year_one*@annuals.YEN_EBITDA, @annuals.year_one*@annuals.YEN_EBITDA, @annuals.year_two*@annuals.YEN_EBITDA, @annuals.year_three*@annuals.YEN_EBITDA, 
+                              @annuals.year_four*@annuals.YEN_EBITDA, @annuals.year_five*@annuals.YEN_EBITDA,@annuals.year_six*@annuals.YEN_EBITDA, @annuals.year_seven*@annuals.YEN_EBITDA,
+                              @annuals.year_eight*@annuals.YEN_EBITDA, @annuals.year_nine*@annuals.YEN_EBITDA, @annuals.year_ten*@annuals.YEN_EBITDA, 0.2, 0.15]
+        m_BRL_EBITDA_curve = [@annuals.year_one*@annuals.BRL_EBITDA, @annuals.year_one*@annuals.BRL_EBITDA, @annuals.year_two*@annuals.BRL_EBITDA, @annuals.year_three*@annuals.BRL_EBITDA, 
+                              @annuals.year_four*@annuals.BRL_EBITDA, @annuals.year_five*@annuals.BRL_EBITDA,@annuals.year_six*@annuals.BRL_EBITDA, @annuals.year_seven*@annuals.BRL_EBITDA,
+                              @annuals.year_eight*@annuals.BRL_EBITDA, @annuals.year_nine*@annuals.BRL_EBITDA, @annuals.year_ten*@annuals.BRL_EBITDA, 0.2, 0.15]
+   
+
+        @forwardcurve.each do |@forwardcurve| 
+           if @forwardcurve.currency == 'EURUSD'
+                m_EURUSD_curve = [@forwardcurve.year_one, @forwardcurve.year_one, @forwardcurve.year_two, @forwardcurve.year_three, @forwardcurve.year_four, @forwardcurve.year_five, 
+                                  @forwardcurve.year_six, @forwardcurve.year_seven, @forwardcurve.year_eight, @forwardcurve.year_nine, @forwardcurve.year_ten, 0.2, 0.15]
+           end
+
+           if @forwardcurve.currency == 'EURGBP' 
+                m_EURGBP_curve = [@forwardcurve.year_one, @forwardcurve.year_one, @forwardcurve.year_two, @forwardcurve.year_three, @forwardcurve.year_four, @forwardcurve.year_five, 
+                                  @forwardcurve.year_six, @forwardcurve.year_seven, @forwardcurve.year_eight, @forwardcurve.year_nine, @forwardcurve.year_ten, 0.2, 0.15]
+           end
+
+           if @forwardcurve.currency == 'EURYEN' 
+                m_EURYEN_curve = [@forwardcurve.year_one, @forwardcurve.year_one, @forwardcurve.year_two, @forwardcurve.year_three, @forwardcurve.year_four, @forwardcurve.year_five, 
+                                  @forwardcurve.year_six, @forwardcurve.year_seven, @forwardcurve.year_eight, @forwardcurve.year_nine, @forwardcurve.year_ten, 0.2, 0.15]
+           end
+
+           if @forwardcurve.currency == 'EURBRL' 
+                m_EURBRL_curve = [@forwardcurve.year_one, @forwardcurve.year_one, @forwardcurve.year_two, @forwardcurve.year_three, @forwardcurve.year_four, @forwardcurve.year_five, 
+                                  @forwardcurve.year_six, @forwardcurve.year_seven, @forwardcurve.year_eight, @forwardcurve.year_nine, @forwardcurve.year_ten, 0.2, 0.15]
+           end
+        end
+
+    
+        # need a market_data array to hold all the other curves
+        m_market_data = [m_USD_EBITDA_curve, m_EUR_EBITDA_curve, m_GBP_EBITDA_curve, m_YEN_EBITDA_curve, m_BRL_EBITDA_curve, m_EURUSD_curve, m_EURGBP_curve, m_EURYEN_curve, m_EURBRL_curve ]
+
+    
+
+    # need to set the mean curve value for year zero equal to the market data year zero value, for each curve
+
+    for j in 0...9:
+                                
+        for k in 0...17:
+
+            m_simulated[j][k][0] = m_market_data[j][0]
+        end
+   end 
+
+
+   # this creates the simulated data using the market data and correlated data
+
+   m = 0
+   for m in 0...17
+       i = 0
+       for i in 1...10
+           j = 0
+           for j in 0...9
+   
+                        x = m_simulated[j][m][i-1] * Math.exp(Math.log(m_market_data[j][i]/m_market_data[j][i-1]))
+                        x = x + (m_market_data[j][11]* (m_market_data[j][i] - x))
+                        m_simulated[j][m][i] = x * Math.exp((m_market_data[j][12]* m_correlated[j][m][i]) - (m_market_data[j][12]*m_market_data[j][12]/2))
+
+                        
+                        # prevent negative numbers
+                        if m_simulated[j][m][i] < 0
+                            m_simulated[j][m][i] = m_simulated[j][m][i] * -1
+                        end 
+           end
+       end
+    end
+
+
+   end # this is the end of the annuals each do loop, variables defined in the loop can only be used in the loop %> 
+
+
+<% end # this is the end of the loop through the cholesky matrix %> 
+
+
+<br/><br/><hr><br/>
+
+<h1>Annul FX interest expense</h1>
+<% year_count = 0 %>
+<% year_amount = [] %>
+<% year = ['year 1', 'year 2', 'year 3'] %>
+<% year.each do |year|%>
+    
+    <h3><%= year %></h3>
+    <% total = 0 %> 
+    <% @total_debt.each do |total_debt| %>
+         <% if (total_debt.maturity_year - Time.now.year - year_count) > 0 %>            
+            <% total = (total_debt.size * total_debt.coupon) + total  %>
+         <% else %>
+            <% total = total + 0 %>
+         <% end %> 
+    <% end %>
+    <%= total %>
+    <% year_amount << total %> 
+    <% year_count = year_count + 1 %>
+<% end %>
+<br />
+<br/><br/>

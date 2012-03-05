@@ -16,7 +16,10 @@ class BasecasesController < ApplicationController
      @currency_percent = @basecase.total_debt(params[:id]).group_by{|c| c.currency }
      @float_percent = @basecase.total_debt(params[:id]).group_by{|c| c.fixed_float }
      @maturity_percent = @basecase.total_debt(params[:id]).group_by{|c| c.maturity_year - c.issue_year }
-     @reset_percent = @basecase.total_debt(params[:id]).group_by{|c| c.maturity_year - Time.now.year }       
+     @reset_percent = @basecase.total_debt(params[:id]).group_by{|c| c.maturity_year - Time.now.year }
+     # this it to add show the cholesky 
+     @cholesky = Cholesky.find(:all)
+     @forwardcurve = Forwardcurve.find(:all)       
   end
 
   def create
