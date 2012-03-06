@@ -185,7 +185,13 @@
     m_EURUSD_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15]
     m_EURGBP_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15]
     m_EURYEN_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15]
-    m_EURBRL_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15] 
+    m_EURBRL_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15]
+
+    net_USD_operating_assets = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] # there are only 10 items in this array (i.e. prior year is not included)
+    net_EUR_operating_assets = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    net_GBP_operating_assets = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    net_YEN_operating_assets = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    net_BRL_operating_assets = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
     m_correlated = Array.new(9){Array.new(17){Array.new(10){0}}}
     m_simulated = Array.new(9){Array.new(17){Array.new(10){0}}}
@@ -252,6 +258,27 @@
         m_BRL_EBITDA_curve = [@annuals.year_one*@annuals.BRL_EBITDA, @annuals.year_one*@annuals.BRL_EBITDA, @annuals.year_two*@annuals.BRL_EBITDA, @annuals.year_three*@annuals.BRL_EBITDA, 
                               @annuals.year_four*@annuals.BRL_EBITDA, @annuals.year_five*@annuals.BRL_EBITDA,@annuals.year_six*@annuals.BRL_EBITDA, @annuals.year_seven*@annuals.BRL_EBITDA,
                               @annuals.year_eight*@annuals.BRL_EBITDA, @annuals.year_nine*@annuals.BRL_EBITDA, @annuals.year_ten*@annuals.BRL_EBITDA, 0.2, 0.15]
+
+        net_USD_operating_assets = [@annuals.year_one*@annuals.USD_net_assets, @annuals.year_two*@annuals.USD_net_assets, @annuals.year_three*@annuals.USD_net_assets, 
+                              @annuals.year_four*@annuals.USD_net_assets, @annuals.year_five*@annuals.USD_net_assets,@annuals.year_six*@annuals.USD_net_assets,
+                              @annuals.year_seven*@annuals.USD_net_assets, @annuals.year_eight*@annuals.USD_net_assets, @annuals.year_nine*@annuals.USD_net_assets, 
+                              @annuals.year_ten*@annuals.USD_net_assets]
+        net_EUR_operating_assets = [@annuals.year_one*@annuals.EUR_net_assets, @annuals.year_two*@annuals.EUR_net_assets, @annuals.year_three*@annuals.EUR_net_assets, 
+                              @annuals.year_four*@annuals.EUR_net_assets, @annuals.year_five*@annuals.EUR_net_assets,@annuals.year_six*@annuals.EUR_net_assets,
+                              @annuals.year_seven*@annuals.EUR_net_assets, @annuals.year_eight*@annuals.EUR_net_assets, @annuals.year_nine*@annuals.EUR_net_assets, 
+                              @annuals.year_ten*@annuals.EUR_net_assets]
+        net_GBP_operating_assets = [@annuals.year_one*@annuals.GBP_net_assets, @annuals.year_two*@annuals.GBP_net_assets, @annuals.year_three*@annuals.GBP_net_assets, 
+                              @annuals.year_four*@annuals.GBP_net_assets, @annuals.year_five*@annuals.GBP_net_assets,@annuals.year_six*@annuals.GBP_net_assets,
+                              @annuals.year_seven*@annuals.GBP_net_assets, @annuals.year_eight*@annuals.GBP_net_assets, @annuals.year_nine*@annuals.GBP_net_assets, 
+                              @annuals.year_ten*@annuals.GBP_net_assets]
+        net_YEN_operating_assets = [@annuals.year_one*@annuals.YEN_net_assets, @annuals.year_two*@annuals.YEN_net_assets, @annuals.year_three*@annuals.YEN_net_assets, 
+                              @annuals.year_four*@annuals.YEN_net_assets, @annuals.year_five*@annuals.YEN_net_assets,@annuals.year_six*@annuals.YEN_net_assets,
+                              @annuals.year_seven*@annuals.YEN_net_assets, @annuals.year_eight*@annuals.YEN_net_assets, @annuals.year_nine*@annuals.YEN_net_assets, 
+                              @annuals.year_ten*@annuals.YEN_net_assets]
+        net_BRL_operating_assets = [@annuals.year_one*@annuals.BRL_net_assets, @annuals.year_two*@annuals.BRL_net_assets, @annuals.year_three*@annuals.BRL_net_assets, 
+                              @annuals.year_four*@annuals.BRL_net_assets, @annuals.year_five*@annuals.BRL_net_assets,@annuals.year_six*@annuals.BRL_net_assets,
+                              @annuals.year_seven*@annuals.BRL_net_assets, @annuals.year_eight*@annuals.BRL_net_assets, @annuals.year_nine*@annuals.BRL_net_assets, 
+                              @annuals.year_ten*@annuals.BRL_net_assets]
    
 
         @forwardcurve.each do |@forwardcurve| 
@@ -336,21 +363,20 @@
         <% total = 0 %> 
             <% @total_debt.each do |total_debt| %>
                 <% if (total_debt.maturity_year - Time.now.year - year_count) > 0 %>            
-                    <% total = (total_debt.size * total_debt.coupon) + total  %>
                     <% if total_debt.currency == 'EUR' %>
-                        <% total = total + 0 %> 
+                        <% total = total + (total_debt.size * total_debt.coupon)  %> 
                     <% end %> 
                     <% if total_debt.currency == 'USD' %>
-                        <% total = total/m_simulated[5][i][1] %> 
+                        <% total = total + (total_debt.size * total_debt.coupon)/m_simulated[5][i][year_count + 1] %> 
                     <% end %> 
                     <% if total_debt.currency == 'GBP' %>
-                        <% total = total/m_simulated[6][i][1] %> 
+                        <% total = total + (total_debt.size * total_debt.coupon)/m_simulated[6][i][year_count + 1] %> 
                     <% end %> 
                     <% if total_debt.currency == 'YEN' %>
-                        <% total = total/m_simulated[7][i][1] %> 
+                        <% total = total + (total_debt.size * total_debt.coupon)/m_simulated[7][i][year_count + 1] %> 
                     <% end %> 
                     <% if total_debt.currency == 'BRL' %>
-                        <% total = total/m_simulated[8][i][1] %> 
+                        <% total = total + (total_debt.size * total_debt.coupon)/m_simulated[8][i][year_count + 1] %> 
                     <% end %> 
                 <% else %>
                     <% total = total + 0 %>
@@ -386,6 +412,160 @@
     1%:
     <%= m_interest_expense.calculate_percentile(0.01).round(2) %></br>
     <% year_amount << m_interest_expense.mean_it.round(2) %>
+    <% year_count = year_count + 1 %>
+<% end %>
+
+<br />
+<img src="<%=Gchart.bar(:data => year_amount, :labels => ['year 1', 'year 2', 'year 3'], :bar_width_and_spacing => [19,40], :legend => year_amount)%>">
+<br/><br/>
+
+<hr>
+<h1>Annul translation losses and gains</h1>
+<% year_count = 0 # need to set year count back to zero after interest expense calculation above %>
+<% year_amount = [] %>
+<% year = ['year 1', 'year 2', 'year 3'] %>
+<% year.each do |year|%>
+    
+    <h3><%= year %></h3>
+    <% m_fx_translations = Array.new(17){0}%>
+    <% for i in 0...17 %>
+        <% total = 0 %> 
+            <% @total_debt.each do |total_debt| %>
+                <% if (total_debt.maturity_year - Time.now.year - year_count) > 0 %>            
+                    <% if total_debt.currency == 'EUR' %>
+                        <% total = total + 0 # EUR (home) assets do not cause translation gains/losses %> 
+                    <% end %> 
+                    <% if total_debt.currency == 'USD' %>
+                        <% total = total - (total_debt.size/m_simulated[5][i][year_count + 1]) # debt reduces net assets hence negative sign %> 
+                    <% end %> 
+                    <% if total_debt.currency == 'GBP' %>
+                        <% total = total - (total_debt.size/m_simulated[6][i][year_count + 1]) %> 
+                    <% end %> 
+                    <% if total_debt.currency == 'YEN' %>
+                        <% total = total - (total_debt.size/m_simulated[7][i][year_count + 1]) %> 
+                    <% end %> 
+                    <% if total_debt.currency == 'BRL' %>
+                        <% total = total - (total_debt.size/m_simulated[8][i][year_count + 1]) %> 
+                    <% end %> 
+                <% else %>
+                    <% total = total + 0 %>
+                <% end %> 
+            <% end %>
+            <% total = total + (net_USD_operating_assets[year_count]/m_simulated[5][i][year_count + 1]) %>
+            <% total = total + (net_GBP_operating_assets[year_count]/m_simulated[6][i][year_count + 1]) %>
+            <% total = total + (net_YEN_operating_assets[year_count]/m_simulated[7][i][year_count + 1]) %>
+            <% total = total + (net_BRL_operating_assets[year_count]/m_simulated[8][i][year_count + 1]) %>    
+
+        <% m_fx_translations[i] = total  %>
+    <% end %>
+    Mean: <br/>
+    <%= m_fx_translations.mean_it.round(2) %><br/>
+    Standard deviation: <br/>
+    <%= m_fx_translations.standard_deviation_it.round(2) %></br>
+    Percentiles <br/>
+    99%: 
+    <%= m_fx_translations.calculate_percentile(0.99).round(2) %></br>
+    95%: 
+    <%= m_fx_translations.calculate_percentile(0.95).round(2) %></br>
+    85%:
+    <%= m_fx_translations.calculate_percentile(0.85).round(2) %></br>
+    75%:  
+    <%= m_fx_translations.calculate_percentile(0.75).round(2) %></br>
+    67%: 
+    <%= m_fx_translations.calculate_percentile(0.67).round(2) %></br>
+    50%:
+    <%= m_fx_translations.calculate_percentile(0.50).round(2) %></br>
+    33%:
+    <%= m_fx_translations.calculate_percentile(0.33).round(2) %></br>
+    25%:
+    <%= m_fx_translations.calculate_percentile(0.25).round(2) %></br>
+    15%:
+    <%= m_fx_translations.calculate_percentile(0.15).round(2) %></br>
+    5%:
+    <%= m_fx_translations.calculate_percentile(0.05).round(2) %></br>
+    1%:
+    <%= m_fx_translations.calculate_percentile(0.01).round(2) %></br>
+    <% year_amount << m_fx_translations.mean_it.round(2) %>
+    <% year_count = year_count + 1 %>
+<% end %>
+
+<br />
+<img src="<%=Gchart.bar(:data => year_amount, :labels => ['year 1', 'year 2', 'year 3'], :bar_width_and_spacing => [19,40], :legend => year_amount)%>">
+<br/><br/>
+
+<hr>
+<h1>Economic profit</h1>
+<% year_count = 0 # need to set year count back to zero after interest expense calculation above %>
+<% year_amount = [] %>
+<% year = ['year 1', 'year 2', 'year 3'] %>
+<% year.each do |year|%>
+    
+    <h3><%= year %></h3>
+    <% m_economic_profit = Array.new(17){0}%>
+    <% for i in 0...17 %>
+        <% total = 0 %> 
+            <% @total_debt.each do |total_debt| %>
+                <% if (total_debt.maturity_year - Time.now.year - year_count) > 0 %>            
+                    <% if total_debt.currency == 'EUR' %>
+                        <% total = total + 0 # EUR (home) assets do not cause translation gains/losses %> 
+                        <% total = total - (total_debt.size * total_debt.coupon)  %> 
+                    <% end %> 
+                    <% if total_debt.currency == 'USD' %>
+                        <% total = total - (total_debt.size/m_simulated[5][i][year_count + 1]) # debt reduces net assets hence negative sign %> 
+                        <% total = total - (total_debt.size * total_debt.coupon)/m_simulated[5][i][year_count + 1] %> 
+                    <% end %> 
+                    <% if total_debt.currency == 'GBP' %>
+                        <% total = total - (total_debt.size/m_simulated[6][i][year_count + 1]) %> 
+                        <% total = total - (total_debt.size * total_debt.coupon)/m_simulated[6][i][year_count + 1] %> 
+                    <% end %> 
+                    <% if total_debt.currency == 'YEN' %>
+                        <% total = total - (total_debt.size/m_simulated[7][i][year_count + 1]) %> 
+                        <% total = total - (total_debt.size * total_debt.coupon)/m_simulated[7][i][year_count + 1] %> 
+                    <% end %> 
+                    <% if total_debt.currency == 'BRL' %>
+                        <% total = total - (total_debt.size/m_simulated[8][i][year_count + 1]) %> 
+                        <% total = total - (total_debt.size * total_debt.coupon)/m_simulated[8][i][year_count + 1] %> 
+                    <% end %> 
+                <% else %>
+                    <% total = total + 0 %>
+                <% end %> 
+            <% end %>
+            <% total = total + m_EUR_EBITDA_curve[year_count + 1] # EUR (home) assets do not cause translation gains/losses %>
+            <% total = total + ((net_USD_operating_assets[year_count] + m_USD_EBITDA_curve[year_count + 1])/m_simulated[5][i][year_count + 1]) %>
+            <% total = total + ((net_GBP_operating_assets[year_count] + m_GBP_EBITDA_curve[year_count + 1])/m_simulated[6][i][year_count + 1]) %>
+            <% total = total + ((net_YEN_operating_assets[year_count] + m_GBP_EBITDA_curve[year_count + 1])/m_simulated[7][i][year_count + 1]) %>
+            <% total = total + ((net_BRL_operating_assets[year_count] + m_GBP_EBITDA_curve[year_count + 1])/m_simulated[8][i][year_count + 1]) %>    
+
+        <% m_economic_profit[i] = total  %>
+    <% end %>
+    Mean: <br/>
+    <%= m_economic_profit.mean_it.round(2) %><br/>
+    Standard deviation: <br/>
+    <%= m_economic_profit.standard_deviation_it.round(2) %></br>
+    Percentiles <br/>
+    99%: 
+    <%= m_economic_profit.calculate_percentile(0.99).round(2) %></br>
+    95%: 
+    <%= m_economic_profit.calculate_percentile(0.95).round(2) %></br>
+    85%:
+    <%= m_economic_profit.calculate_percentile(0.85).round(2) %></br>
+    75%:  
+    <%= m_economic_profit.calculate_percentile(0.75).round(2) %></br>
+    67%: 
+    <%= m_economic_profit.calculate_percentile(0.67).round(2) %></br>
+    50%:
+    <%= m_economic_profit.calculate_percentile(0.50).round(2) %></br>
+    33%:
+    <%= m_economic_profit.calculate_percentile(0.33).round(2) %></br>
+    25%:
+    <%= m_economic_profit.calculate_percentile(0.25).round(2) %></br>
+    15%:
+    <%= m_economic_profit.calculate_percentile(0.15).round(2) %></br>
+    5%:
+    <%= m_economic_profit.calculate_percentile(0.05).round(2) %></br>
+    1%:
+    <%= m_economic_profit.calculate_percentile(0.01).round(2) %></br>
+    <% year_amount << m_economic_profit.mean_it.round(2) %>
     <% year_count = year_count + 1 %>
 <% end %>
 
