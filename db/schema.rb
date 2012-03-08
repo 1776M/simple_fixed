@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120205111554) do
+ActiveRecord::Schema.define(:version => 20120307103214) do
 
   create_table "actannuals", :force => true do |t|
     t.float    "year_one"
@@ -282,6 +282,47 @@ ActiveRecord::Schema.define(:version => 20120205111554) do
     t.float    "fx15_fx13_EBITDA"
     t.float    "fx15_fx14_EBITDA"
     t.float    "fx15_fx15_EBITDA"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "choleskyirs", :force => true do |t|
+    t.float    "EBITDA_EBITDA"
+    t.float    "EBITDA_EUR"
+    t.float    "EBITDA_USD"
+    t.float    "EBITDA_GBP"
+    t.float    "EBITDA_YEN"
+    t.float    "EBITDA_BRL"
+    t.float    "EUR_EBITDA"
+    t.float    "EUR_EUR"
+    t.float    "EUR_USD"
+    t.float    "EUR_GBP"
+    t.float    "EUR_YEN"
+    t.float    "EUR_BRL"
+    t.float    "USD_EBITDA"
+    t.float    "USD_EUR"
+    t.float    "USD_USD"
+    t.float    "USD_GBP"
+    t.float    "USD_YEN"
+    t.float    "USD_BRL"
+    t.float    "GBP_EBITDA"
+    t.float    "GBP_EUR"
+    t.float    "GBP_USD"
+    t.float    "GBP_GBP"
+    t.float    "GBP_YEN"
+    t.float    "GBP_BRL"
+    t.float    "YEN_EBITDA"
+    t.float    "YEN_EUR"
+    t.float    "YEN_USD"
+    t.float    "YEN_GBP"
+    t.float    "YEN_YEN"
+    t.float    "YEN_BRL"
+    t.float    "BRL_EBITDA"
+    t.float    "BRL_EUR"
+    t.float    "BRL_USD"
+    t.float    "BRL_GBP"
+    t.float    "BRL_YEN"
+    t.float    "BRL_BRL"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -22,7 +22,11 @@
                     <li>
                         <%= link_to "Cholesky matrix", choleskies_path %>
                         <%= link_to "new", new_cholesky_path %>
-                    </li>   
+                    </li>
+                    <li>
+                        <%= link_to "Cholesky IR matrix", choleskyirs_path %>
+                        <%= link_to "new", new_choleskyir_path %>
+                    </li>      
                 <% else %>
                     <li><%= link_to "Home", root_path %></li> 
                 <% end %> 

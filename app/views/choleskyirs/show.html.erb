@@ -1,0 +1,296 @@
+<h1>
+  <%= @choleskyir.EBITDA_EBITDA %>   
+</h1>
+
+    <%= link_to "edit", edit_choleskyir_path(@choleskyir.id) %>
+
+<%= Matrix[[@choleskyir.EBITDA_EBITDA*5*25,15,-5],
+           [15,18,0],
+           [-5,0,11]].cholesky_factor %> 
+
+
+
+<%=
+   m_decomped =
+    Matrix[[@choleskyir.EBITDA_EBITDA, @choleskyir.EBITDA_EUR, @choleskyir.EBITDA_USD, @choleskyir.EBITDA_GBP, @choleskyir.EBITDA_YEN, @choleskyir.EBITDA_BRL],
+	    [@choleskyir.EUR_EBITDA, @choleskyir.EUR_EUR, @choleskyir.EUR_USD, @choleskyir.EUR_GBP, @choleskyir.EUR_YEN, @choleskyir.EUR_BRL],
+           [@choleskyir.USD_EBITDA, @choleskyir.USD_EUR, @choleskyir.USD_USD, @choleskyir.USD_GBP, @choleskyir.USD_YEN, @choleskyir.USD_BRL],
+           [@choleskyir.GBP_EBITDA, @choleskyir.GBP_EUR, @choleskyir.GBP_USD, @choleskyir.GBP_GBP, @choleskyir.GBP_YEN, @choleskyir.GBP_BRL],
+           [@choleskyir.YEN_EBITDA, @choleskyir.YEN_EUR, @choleskyir.YEN_USD, @choleskyir.YEN_GBP, @choleskyir.YEN_YEN, @choleskyir.YEN_BRL],
+           [@choleskyir.BRL_EBITDA, @choleskyir.BRL_EUR, @choleskyir.BRL_USD, @choleskyir.BRL_GBP, @choleskyir.BRL_YEN, @choleskyir.BRL_BRL]
+          ].cholesky_factor
+%>
+<br/><br/>
+<% 
+   m_rand = Matrix[[rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand()],
+                   [rand(),rand(),rand(),rand(),rand(),rand()]   
+                 ]
+
+ %>
+
+<br/><br/>
+
+<%=
+    
+    m_deviates = m_rand*m_decomped
+
+    # this is the deviates
+    correlated_data = Array.new(17){Array.new(6){Array.new(3){rand}}}
+
+
+
+%>
+<br /><br />
+
+
+<%
+
+    m_test = Array.new(17){Array.new(6){rand} }
+
+    i = 0
+    for i in 0...17
+        j=0
+        for j in 0...6
+            m_test[i][j] = m_deviates[i,j] 
+        end
+    end
+
+%>
+
+<br/><br/>
+
+<%=
+
+   correlated_data[16][5][2]
+
+%>
+<%=
+    'see above'
+%>
+<br/><br/>
+<%=
+
+   m_deviates[0,0]
+%>
+
+from import_data_class import *
+from cholesky_function import *
+from market_data import *
+import random
+import math
+
+class simulation(import_data):
+
+    def __init__(self, nsims, nyears): 
+
+        self.nsims = nsims
+        self.nyears = nyears + 1 # need to include year zero too
+
+        # import the market data and the corresponding correlation matrix
+        self.import_csv('market_data')
+        self.import_csv('corr_matrix')
+
+        # calculate the choleksy decomposition
+        self.decomped_matrix = cholesky(self.corr_matrix)
+
+        # create an empty list to hold the correlated data (deviates) and simulated data (simulated curves)
+        self.correlated_data = [[[0 for i in range(nsims)] for j in range(len(self.decomped_matrix))] for k in range(self.nyears)]
+        self.simulated_data = [[[0 for i in range(nsims)] for j in range(len(self.decomped_matrix))] for k in range(self.nyears)]                        
+
+        
+        # list of random numbers
+        self.random_data = [[self.gauss() for i in range(nsims)] for j in range(len(self.decomped_matrix))]
+
+        # this populates the correlated random numbers for each year (i.e creates the deviates)                  
+        for i in range(self.nyears):
+                               
+            for j in range(len(self.decomped_matrix)):
+                               
+                for k in range(len(self.decomped_matrix)):
+
+                    for m in range(nsims):
+                               
+                        self.correlated_data[i][j][m] = self.correlated_data[i][j][m] + (self.decomped_matrix[k][j] * self.random_data[k][m])
+            
+
+        # need to set the mean curve value for year zero equal to the market data year zero value, for each curve
+
+        for j in range(len(self.decomped_matrix)):
+                                
+            for m in range(nsims):
+
+                self.simulated_data[0][j][m] = self.market_data[j][4]                        
+
+                                
+
+        # this creates the simulated data using the market data and correlated data
+
+        for m in range(nsims):
+
+            for i in range(1,self.nyears):
+
+                for j in range(len(self.decomped_matrix)):
+   
+                        x = self.simulated_data[i-1][j][m] * math.exp(math.log(self.market_data[j][i+4]/self.market_data[j][i-1+4]))
+                        x = x + (self.market_data[j][2]* (self.market_data[j][i+4] - x))
+                        self.simulated_data[i][j][m] = x * math.exp((self.market_data[j][3]* self.correlated_data[i][j][m]) \
+                                                                    - (self.market_data[j][3]*self.market_data[j][3]/2))
+
+                        
+                        # prevent negative numbers
+                        if self.simulated_data[i][j][m] < 0:
+                            self.simulated_data[i][j][m] = self.simulated_data[i][j][m] * -1
+                                       
+
+    def gauss(self):
+        total = 0
+        for i in range(12):
+            total = total + random.random()
+        total = total - 6
+        return(total)                    
+
+<br/><br/>    
+****array multiplication test****
+
+<%
+
+    m_multiply1 = Array.new(5){Array.new(3){0} }
+    m_multiply2 = Array.new(3){Array.new(2){0} }
+    m_multiply3 = Array.new(5){Array.new(2){0} }
+
+    i = 0
+    for i in 0...5
+        j=0
+        for j in 0...3
+            k = 0
+            for k in 0...2
+                m_multiply3[i][k] = m_multiply3[i][k] + (m_multiply1[i][j] * m_multiply2[j][k]) 
+            end
+        end
+    end
+
+
+    m_multiply4 = Array.new(6){Array.new(6){0} }
+    m_multiply5 = Array.new(6){Array.new(17){0} }
+    m_correlated = Array.new(6){Array.new(17){Array.new(10){0}} }
+
+    h = 0
+    for h in 0...10
+        i = 0
+        for i in 0...6
+            j=0
+            for j in 0...6
+                k = 0
+                for k in 0...17
+                    m_correlated[i][k][h] = m_correlated[i][k][h] + (m_multiply4[i][j] * m_multiply5[j][k]) 
+                end
+            end
+        end
+    end
+
+
+    m_multiply4 = Array.new(6){Array.new(9){0} }
+    m_multiply5 = Array.new(6){Array.new(17){0} }
+    m_correlated = Array.new(6){Array.new(17){Array.new(10){0}} }
+    m_simulated = Array.new(6){Array.new(17){Array.new(10){0}} }
+
+    h = 0
+    for h in 0...10
+        i = 0
+        for i in 0...6
+            j=0
+            for j in 0...6
+                k = 0
+                for k in 0...17
+                    m_correlated[i][k][h] = m_correlated[i][k][h] + (m_decomped[i,j] * rand()) 
+                end
+            end
+        end
+    end
+
+
+    # need to generate an EBITDA_curve
+
+    m_EBITDA_curve = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 0.2, 0.15]
+    m_EUR_curve = [1.32, 1.33, 1.34, 1.35, 1.36, 1.37, 1.38, 1.39, 1.40, 1.41, 1.42, 0.2, 0.15]
+    m_USD_curve = [1.32, 1.33, 1.34, 1.35, 1.36, 1.37, 1.38, 1.39, 1.40, 1.41, 1.42, 0.2, 0.15]
+    m_GBP_curve = [1.32, 1.33, 1.34, 1.35, 1.36, 1.37, 1.38, 1.39, 1.40, 1.41, 1.42, 0.2, 0.15]
+    m_YEN_curve = [1.32, 1.33, 1.34, 1.35, 1.36, 1.37, 1.38, 1.39, 1.40, 1.41, 1.42, 0.2, 0.15]
+    m_BRL_curve = [1.32, 1.33, 1.34, 1.35, 1.36, 1.37, 1.38, 1.39, 1.40, 1.41, 1.42, 0.2, 0.15]
+    
+    # need an market_data array to hold all the other curves
+    m_market_data = [m_EBITDA_curve, m_EUR_curve, m_USD_curve, m_GBP_curve, m_YEN_curve, m_BRL_curve]
+
+    # need to set the mean curve value for year zero equal to the market data year zero value, for each curve
+
+    for j in 0...6:
+                                
+        for k in 0...17:
+
+            m_simulated[j][k][0] = m_market_data[j][0]
+        end
+   end 
+
+
+   # this creates the simulated data using the market data and correlated data
+
+   m = 0
+   for m in 0...17
+       i = 0
+       for i in 1...10
+           j = 0
+           for j in 0...6
+   
+                        x = m_simulated[j][m][i-1] * Math.exp(Math.log(m_market_data[j][i]/m_market_data[j][i-1]))
+                        x = x + (m_market_data[j][11]* (m_market_data[j][i] - x))
+                        m_simulated[j][m][i] = x * Math.exp((m_market_data[j][12]* m_correlated[j][m][i]) - (m_market_data[j][12]*m_market_data[j][12]/2))
+
+                        
+                        # prevent negative numbers
+                        if m_simulated[j][m][i] < 0
+                            m_simulated[j][m][i] = m_simulated[j][m][i] * -1
+                        end 
+           end
+       end
+    end               
+
+
+%>
+
+
+<%= 
+
+m_simulated[0][0][0]
+
+%>
+
+<%= 
+
+m_simulated[0][0][1]
+
+%>
+<%= 
+
+m_simulated[0][0][2]
+
+%>
+<%= 
+
+m_simulated[0][0][3]
+
+%>

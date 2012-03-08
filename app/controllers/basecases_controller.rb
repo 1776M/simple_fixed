@@ -19,6 +19,7 @@ class BasecasesController < ApplicationController
      @reset_percent = @basecase.total_debt(params[:id]).group_by{|c| c.maturity_year - Time.now.year }
      # this it to add show the cholesky 
      @cholesky = Cholesky.find(:all)
+     @choleskyir = Choleskyir.find(:all)
      @forwardcurve = Forwardcurve.find(:all)       
   end
 
