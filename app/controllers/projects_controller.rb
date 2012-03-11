@@ -8,7 +8,11 @@ class ProjectsController < ApplicationController
      @project = current_user.projects.find(params[:id])
      @scenarios = @project.scenarios
      @title = @project.project_name
-     @scenario = Scenario.new if signed_in?          
+     @scenario = Scenario.new if signed_in?
+     # this it to add show the cholesky 
+     @cholesky = Cholesky.find(:all)
+     @choleskyir = Choleskyir.find(:all)
+     @forwardcurve = Forwardcurve.find(:all)           
   end
 
   def create

@@ -238,19 +238,8 @@
             end
         end
     end
-
-
-    # need to generate an EBITDA_curve from the annuals data
-
-    m_EURUSD_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15]
-    m_EURGBP_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15]
-    m_EURYEN_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15]
-    m_EURBRL_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15]
-    m_EURUSD_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15]
-    m_EURGBP_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15]
-    m_EURYEN_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15]
-    m_EURBRL_curve = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.2, 0.15] 
-
+    break
+    end # this is the end of the loop through the cholesky matrix 
 
     @annuals.each do |@annuals|
 
@@ -387,8 +376,6 @@
 
    end # this is the end of the annuals each do loop, variables defined in the loop can only be used in the loop %> 
 
-
-<% end # this is the end of the loop through the cholesky matrix %> 
 
 
 <br/><br/><hr><br/>
@@ -694,6 +681,9 @@
             end
         end
     end
+    break
+  end # this is the end of the loop through the choleskyir matrix 
+
 
     # need a market_data array to hold all the other curves
     m_market_data_ir = [m_EBITDA_curve, m_EUR_curve, m_USD_curve, m_GBP_curve, m_YEN_curve, m_BRL_curve]
@@ -733,7 +723,6 @@
        end
     end
 %>
-<% end # this is the end of the loop through the choleskyir matrix %> 
 
 
 <% year_count = 0 # need to set year count back to zero after interest expense calculation above %>
