@@ -637,6 +637,28 @@
 
     @actannuals.each do |@actannuals|
 
+        # remove nil values
+
+        if @actannuals.USD_EBITDA.nil?
+          @actannuals.USD_EBITDA = 0
+        end
+
+        if @actannuals.EUR_EBITDA.nil?
+          @actannuals.EUR_EBITDA = 0
+        end
+
+        if @actannuals.USD_EBITDA.nil?
+          @actannuals.EUR_EBITDA = 0
+        end
+
+        if @actannuals.USD_EBITDA.nil?
+          @actannuals.EUR_EBITDA = 0
+        end
+
+        if @actannuals.USD_EBITDA.nil?
+          @actannuals.EUR_EBITDA = 0
+        end
+
         m_USD_EBITDA_curve = [@actannuals.year_one*@actannuals.USD_EBITDA, @actannuals.year_one*@actannuals.USD_EBITDA, @actannuals.year_two*@actannuals.USD_EBITDA, @actannuals.year_three*@actannuals.USD_EBITDA, 
                               @actannuals.year_four*@actannuals.USD_EBITDA, @actannuals.year_five*@actannuals.USD_EBITDA,@actannuals.year_six*@actannuals.USD_EBITDA, @actannuals.year_seven*@actannuals.USD_EBITDA,
                               @actannuals.year_eight*@actannuals.USD_EBITDA, @actannuals.year_nine*@actannuals.USD_EBITDA, @actannuals.year_ten*@actannuals.USD_EBITDA, 0.2, 0.15]
